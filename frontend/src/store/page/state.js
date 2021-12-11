@@ -1,0 +1,4 @@
+export default {
+    pageData: [],
+    submoduleGetData: []
+}

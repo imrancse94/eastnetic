@@ -1,0 +1,67 @@
+<template>
+  <div class=" px-3 py-10 flex justify-center">
+    <div class="w-full max-w-xs">
+  <form @submit.prevent="login" action="#" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="Email">
+        Email
+      </label>
+      <input v-model="email" type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username"  placeholder="Email">
+      <p class="text-red-500 text-xs italic text-left">Please choose a password.</p>
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="password">
+        Password
+      </label>
+      <input v-model="password" type="password" class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" placeholder="Password">
+      <p class="text-red-500 text-xs italic text-left">Please choose a password.</p>
+    </div>
+    <div class="flex items-center justify-center">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+        Sign In
+      </button>
+      
+    </div>
+  </form>
+  <p class="text-center text-gray-500 text-xs">
+    &copy;webdevs assignment.
+  </p>
+</div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      email: "ssadmin@admin.com",
+      password: "123456",
+      errors:{}
+    };
+  },
+  methods: {
+    login() {
+      let email = this.email;
+      let password = this.password;
+      let self = this;
+      this.$store.dispatch("loading/startLoading");
+      this.$store
+        .dispatch("auth/login", { email, password })
+        .then((response) => {
+          if (response.success) {
+            self.$store.dispatch("loading/stopLoading");
+            this.$router.push("/admin");
+            this.$toast.success("Successfully loggedin");
+          } else {
+            this.has_error = true;
+            this.errors = response;
+          }
+        });
+    },
+  },
+  mounted(){
+    
+  }
+};
+</script>
+

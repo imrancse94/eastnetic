@@ -3,25 +3,41 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 trait FileUploadTrait{
 
-    public function uploadFile($file,$name = "",$old_file = ""){
+    public function uploadFile($folder_name,$base64_string,$old_file = ""){
         try{
-            $fileName = time().'.'.$file->extension(); 
-            if(!empty($name)){
-                $fileName = $name.'.'.$file->extension(); 
-            } 
+             
+            @list($extension, $file_data) = explode(';', $base64_string);
+            @list(, $file_data) = explode(',', $file_data); 
+            $extension = explode(";", explode("/", $base64_string)[1])[0];
+            $file_name = $folder_name."/".time().'.'.$extension;
+
+            $this->fileDeleteByPath($old_file);
             
-            if(File::exists(storage_path("app/public/{$old_file}"))){
-                File::delete(storage_path("app/public/{$old_file}"));
-            }
-            return $file->storeAs('uploads', $fileName,'public');
+            $file_path = "uploads/".$file_name;
+            return Storage::put("public/".$file_path,base64_decode($file_data)) ? $file_path : null;
         }catch(\Exception $ex){
-           
+          // dd($ex->getMessage());
         }
 
         return null;
+    }
+
+    public function fileDeleteByPath($file_path){
+        $result = false;
+        $file_path = public_path()."/storage/".$file_path;
+        if(File::exists($file_path)){
+            $result = File::delete($file_path);
+        }
+
+        return $result;
+    }
+
+    public function getImageByFilePath($file_path){
+        return asset("storage/".$file_path);
     }
 
     

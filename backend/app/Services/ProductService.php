@@ -3,13 +3,19 @@
 namespace App\Services;
 
 use App\Models\Product;
-
+use App\Traits\FileUploadTrait;
 class ProductService extends Service{
     
+    use FileUploadTrait;
+
     // new product add
     public function productAdd($inputData){
         $data = null;
         try{
+            if(!empty($inputData['image'])){
+                $inputData['image'] = $this->uploadFile("product",$inputData['image']);
+            }
+
             $data = Product::create($inputData);
         }catch(\Exception $ex){
             dd($ex->getMessage());

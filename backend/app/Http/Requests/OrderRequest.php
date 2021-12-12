@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Validation\Rule;
-use App\Rules\ImageValidationRule;
-class ProductRequest extends BaseRequest
+
+
+class OrderRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,16 @@ class ProductRequest extends BaseRequest
     public function rules()
     {
         return [
-            'name'=>[
+            'product_id'=>[
                 'required',
-                Rule::unique('products','name')->ignore(request('id'))
+                'integer',
+                'gt:0',
+                
             ],
-            'qty'=>'required|integer|gt:0',
-            'unit_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
-            'image'=>[
-                'mimes:jpg,jpeg,png',
-                new ImageValidationRule(256,256)
+            'qty'=>[
+                'required',
+                'integer',
+                'gt:0'
             ]
         ];
     }

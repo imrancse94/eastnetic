@@ -17,9 +17,10 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products');
             $table->foreignId('user_id')->constrained('users');
+            $table->string('unique_order_id',50);
             $table->integer('qty')->default(0);
             $table->decimal('unit_price')->default(0);
-
+            
             //1 = Approved, 2 = Rejected, 3 = Processing, 4 = Shipped, 5 = Delivered
             $table->tinyInteger('order_status')->default(0); 
             $table->timestamps();

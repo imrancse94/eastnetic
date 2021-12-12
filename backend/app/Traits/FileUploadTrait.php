@@ -15,8 +15,10 @@ trait FileUploadTrait{
             $extension = explode(";", explode("/", $base64_string)[1])[0];
             $file_name = $folder_name."/".time().'.'.$extension;
 
-            $this->fileDeleteByPath($old_file);
-            
+            if(!empty($old_file)){
+                $this->fileDeleteByPath($old_file);
+            }
+
             $file_path = "uploads/".$file_name;
             return Storage::put("public/".$file_path,base64_decode($file_data)) ? $file_path : null;
         }catch(\Exception $ex){

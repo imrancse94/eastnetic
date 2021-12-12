@@ -4,9 +4,13 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
-
+use App\Traits\ApiResponseTrait;
+use Exception;
+use Illuminate\Auth\AuthenticationException;
 class Handler extends ExceptionHandler
 {
+
+    use ApiResponseTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -37,5 +41,17 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+
+    public function render($request, Throwable $e){
+
+        if($e instanceof Exception){
+            $error = $e->getMessage();
+            $code = config('constant.UNATHENTICATED_ERROR');
+            return $this->sendError($error,[],$code);
+        }
+
+        return parent::render($request,$e);
     }
 }

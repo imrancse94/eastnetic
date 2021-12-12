@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ProductService;
 use App\Http\Requests\ProductRequest;
+use Symfony\Component\Console\Input\Input;
 
 class ProductController extends Controller
 {
@@ -53,6 +54,34 @@ class ProductController extends Controller
         }
 
         return $this->sendResponse($data,$message,$code);
+    }
+
+    // get all active product list
+    public function getProductList(){
+        $params = request()->all();
+        $data = $this->productService->getAllActiveProducts($params);
+        $message = __("Product list get failed.");
+        $code = config('constant.PRODUCT_GET_LIST_FAILED');
+        if(!empty($data)){
+            $message = __("Product list get successfully.");
+            $code = config('constant.PRODUCT_GET_LIST_SUCCESS');
+        }
+
+        return $this->sendResponse($data,$message,$code);
+    }
+
+
+    // delete product by id
+    public function deleteProductById($product_id){
+        $message = __("Product deleted failed.");
+        $code = config('constant.PRODUCT_DELETED_FAILED');
+        
+        if($this->productService->productDeleteById($product_id)){
+            $message = __("Product deleted successfully.");
+            $code = config('constant.PRODUCT_DELETED_SUCCESS');
+        }
+
+        return $this->sendResponse([],$message,$code);
     }
 
 

@@ -12,10 +12,10 @@
                                             <tr>
                                                 <td class="dark-mode-bg-gray-989 dark-mode-text-gray-979 sm-px-24" style="background-color: #ffffff; padding: 48px; text-align: left; font-size: 16px; line-height: 24px; color: #1f2937;">
                                                     <p class="sm-leading-32 dark-mode-text-white" style="margin: 0; margin-bottom: 36px; font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif; font-size: 24px; font-weight: 600; color: #000000;">
-                                                        Thanks for your order.
+                                                    {{$data['title']}}
                                                     </p>
                                                     <p style="margin: 0; margin-bottom: 24px;">
-                                                        This email is a receipt for your order number 12345.
+                                                        {{$data['text']}}
                                                     </p>
                                                     <p style="margin: 0; margin-bottom: 24px;">
                                                         Order# {{$data['unique_order_id']}}

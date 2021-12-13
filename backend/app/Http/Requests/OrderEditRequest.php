@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 
-class OrderRequest extends BaseRequest
+class OrderEditRequest extends BaseRequest
 {
-    
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,10 +23,9 @@ class OrderRequest extends BaseRequest
     public function rules()
     {
         return [
-            'product_id'=>[
+            'order_status'=>[
                 'required',
-                'integer',
-                'gt:0'              
+                'integer'        
             ],
 
             'qty'=>[

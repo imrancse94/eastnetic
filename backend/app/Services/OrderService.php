@@ -11,26 +11,12 @@ class OrderService extends Service{
     // new order add
     public function orderAdd($inputData){
         $result['status'] = false;
-        $result['data'] = "";
 
         $productservice = new ProductService;
         $product = $productservice->getProductById($inputData['product_id']);
         
-        // product exist check
-        if(is_null($product)){
-            $result['data'] = "There is no product by product_id {$inputData['product_id']}";
-            return $result;
-        }
-
-        if($product->qty == 0){
-            $result['data'] = "The product is not available in stock.";
-            return $result;
-        }
-        // product qty check
-        if($product->qty < $inputData['qty']){
-            $result['data'] = "We have {$product->qty} quantity in stock.";
-            return $result;
-        }
+        // order validation validation
+        $result['data'] = $this->productValidation($product,$inputData['product_id'],$inputData['qty']);
         
         $latest_order_id = Order::query()->orderByDesc('id')->value('id');
         if(empty($latest_order_id)){
@@ -39,13 +25,13 @@ class OrderService extends Service{
         
         $inputData['unique_order_id'] = str_pad($latest_order_id + 1, 8, "0", STR_PAD_LEFT);
         $inputData['unit_price'] = $product->unit_price;
-        $inputData['order_status'] = 3;
+        $inputData['order_status'] = config('constant.ORDER_PENDING');
 
         if($result['data'] = Order::create($inputData)){
             $result['data']['name'] = $product->name;
             $result['status'] = true;
-            $product->qty = $product->qty - $inputData['qty'];
-            $product->save();
+            // $product->qty = $product->qty - $inputData['qty'];
+            // $product->save();
         }
 
         return $result;
@@ -53,7 +39,49 @@ class OrderService extends Service{
 
     // order edit by id
     public function orderEdit($id,$inputData){
-        return Order::where('id',$id)->update($inputData);
+        $result['status'] = false;
+        
+        \DB::beginTransaction();
+
+        try{
+            $productservice = new ProductService;
+
+            // get order by id
+            $order = Order::where('id',$id)->first();
+
+            // get product by product_id
+            $product = $productservice->getProductById($order->product_id);
+            
+            // order validation validation
+            $requested_qty = $inputData['qty'] - $order->qty;
+            $result['data'] = $this->productValidation($product,$order->product_id,$requested_qty);
+
+            if(empty($result['data'])){
+                $updateData['qty'] = $inputData['qty'];
+                $updateData['order_status'] = $inputData['order_status'];
+                if($order->update($updateData)){
+                    $changes = $order->getChanges();
+                    if(!empty($changes)){
+                        // $product->qty = $product->qty - ($requested_qty);
+                        // $product->save();
+                        
+                        // add order history
+                        OrderHistory::create([
+                            'order_id'=>$order->id,
+                            'data' => json_encode($inputData)
+                        ]);
+                    }
+                    $result['status'] = true;
+                    $result['data'] = $inputData;
+                    \DB::commit();
+                }
+            }
+
+        }catch(\Exception $ex){
+            \DB::rollback();
+            dd($ex->getMessage());
+        }   
+        return $result;
     }
 
     // order delete by id
@@ -92,5 +120,26 @@ class OrderService extends Service{
         }
 
         return OrderHistory::create($inputData);
+    }
+
+
+    private function productValidation($product,$product_id,$qty){
+
+        // product exist check
+        if(is_null($product)){
+            return "There is no product by product_id {$product_id}";
+        }
+
+        // product availability check
+        if($product->qty == 0){
+            return "The product is not available in stock.";
+
+        }
+        // product qty check
+        if($product->qty < $qty){
+            return "We have {$product->qty} quantity in stock.";
+        }
+
+        return "";
     }
 }

@@ -2,6 +2,7 @@
 
 return [
     
+    'DEFAULT_PAGINATE_LIMIT'=>10,
     'ADMIN_EMAIL'=>'imrancse94@gmail.com',
 
     'VALIDATION_ERROR'=>1000,
@@ -40,4 +41,7 @@ return [
     
     'ORDER_EDITED_FAILED'=>-108,
     'ORDER_EDITED_SUCCESS'=>108,
+
+    'ORDER_LIST_SUCCESS'=>109,
+    'ORDER_LIST_FAILED'=>-109,
 ];

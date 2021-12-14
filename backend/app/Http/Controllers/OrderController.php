@@ -68,30 +68,43 @@ class OrderController extends Controller
     }
 
     // edit order by id
-    public function editOrder($id,OrderEditRequest $request){
+    public function editOrder($order_id,OrderEditRequest $request){
 
         $inputData = $request->all();
-        $result = $this->orderService->orderEdit($id,$inputData);
+        $user_id = auth()->user()->id;
+        $result = $this->orderService->orderEdit($order_id,$user_id,$inputData);
 
-        $message = __("Order edit failed.");
-        $code = config('constant.ORDER_ADDED_FAILED');
+        
         
         if($result['status']){
             $message = __("Order edit success.");
             $code = config('constant.ORDER_EDITED_SUCCESS');
             return $this->sendResponse($result['data'],$message,$code);
         }
-        
+        $message = $result['data'];
+        $code = config('constant.ORDER_ADDED_FAILED');
         return $this->sendError($message,[],$code);
     }
 
     // get all order list by user_id
-    public function getOrderList(){
+    public function getOrderListByUserId(){
+        $params = request()->all();
+        $user_id = auth()->user()->id;
+        $data = $this->orderService->getAllordersByUserId($user_id,$params);
+
+        $message = __("Order list get failed.");
+        $code = config('constant.ORDER_LIST_FAILED');
+
+        if(!empty($data)){
+            $message = __("Order list get success.");
+            $code = config('constant.ORDER_LIST_SUCCESS');
+        }
         
+        return $this->sendResponse($data,$message,$code);
     }
 
     // get order by order id
-    public function getOrderById(){
+    public function getOrderById($order_id){
         
     }
     

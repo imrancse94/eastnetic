@@ -38,8 +38,9 @@ Route::group(['middleware' => ['auth:api']], function() {
 
     // For orders
     Route::post('order/add/',[OrderController::class,'addOrder']);
-    Route::put('order/edit/{id}',[OrderController::class,'editOrder']);
-    Route::get('order/list',[OrderController::class,'getOrderList']);
-    Route::get('order/{id}',[OrderController::class,'getOrderById']);
+    Route::put('order/edit/{order_id}',[OrderController::class,'editOrder']);
+    Route::get('order/list',[OrderController::class,'getOrderListByUserId']);
+    Route::get('order/{order_id}',[OrderController::class,'getOrderById']);
     Route::delete('order/delete/{order_id}',[ProductController::class,'deleteOrderById']);
+
 });

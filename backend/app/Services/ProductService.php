@@ -83,7 +83,7 @@ class ProductService extends Service{
             $product = $product->where('order_status',$params['order_status']);
         }
 
-        $products = $product->get();
+        $products = $product->simplePaginate(config('constant.DEFAULT_PAGINATE_LIMIT'));
         if(!empty($products)){
             foreach($products as $p){
                 $p->image = $this->getImageByFilePath($p->image);

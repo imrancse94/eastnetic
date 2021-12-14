@@ -38,7 +38,7 @@ class OrderService extends Service{
     }
 
     // order edit by id
-    public function orderEdit($id,$inputData){
+    public function orderEdit($order_id,$user_id,$inputData){
         $result['status'] = false;
         
         \DB::beginTransaction();
@@ -47,8 +47,17 @@ class OrderService extends Service{
             $productservice = new ProductService;
 
             // get order by id
-            $order = Order::where('id',$id)->first();
+            $order = Order::where('id',$order_id)
+                            ->where('user_id',$user_id)
+                            ->whereNotIn('order_status',[
+                                config('constant.ORDER_APPROVED'),
+                                config('constant.ORDER_REJECTED')
+                            ])->first();
 
+            if(empty($order)){
+                $result['data'] = "No order found";
+                return $result;
+            }   
             // get product by product_id
             $product = $productservice->getProductById($order->product_id);
             
@@ -100,8 +109,14 @@ class OrderService extends Service{
     }
 
     // get all active orders
-    public function getAllordersByUserId($user_id){
-        return Order::where('user_id',$user_id)->get();
+    public function getAllordersByUserId($user_id,$params = []){
+        $order = Order::query();
+        $order = $order->where('user_id',$user_id);
+        if(!empty($params['order_status'])){
+            $order = $order->where('order_status',$params['order_status']);
+        }
+
+        return $order->simplePaginate(config('constant.DEFAULT_PAGINATE_LIMIT'));
     }
 
     // get order history by order id

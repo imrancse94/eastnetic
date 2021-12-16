@@ -22,18 +22,25 @@ use App\Http\Controllers\AuthController;
 
 // auth login
 Route::post('login',[AuthController::class,'login']);
+//user 
+Route::post('user/signup',[AuthController::class,'userSignup']);
 
 Route::group(['middleware' => ['auth:api']], function() {
 
-    //user 
-    Route::post('user/signup',[AuthController::class,'userSignup']);
+    // 
+    Route::group(['middleware'=>'role.check'],function(){
+        
+        // For product CRUD
+        Route::post('product/add/',[ProductController::class,'addProduct']);
+        Route::put('product/edit/{id}',[ProductController::class,'editProduct']);
+        Route::get('product/list',[ProductController::class,'getProductList']);
+        Route::get('product/{id}',[ProductController::class,'getProductById']);
+        Route::delete('product/delete/{product_id}',[ProductController::class,'deleteProductById']);
+    });
 
-    // For products
-    Route::post('product/add/',[ProductController::class,'addProduct']);
-    Route::put('product/edit/{id}',[ProductController::class,'editProduct']);
-    Route::get('product/list',[ProductController::class,'getProductList']);
-    Route::get('product/{id}',[ProductController::class,'getProductById']);
-    Route::delete('product/delete/{product_id}',[ProductController::class,'deleteProductById']);
+    
+
+   
 
 
     // For orders
@@ -41,6 +48,6 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::put('order/edit/{order_id}',[OrderController::class,'editOrder']);
     Route::get('order/list',[OrderController::class,'getOrderListByUserId']);
     Route::get('order/{order_id}',[OrderController::class,'getOrderById']);
-    Route::delete('order/delete/{order_id}',[ProductController::class,'deleteOrderById']);
+    Route::delete('order/delete/{order_id}',[OrderController::class,'deleteOrderById']);
 
 });

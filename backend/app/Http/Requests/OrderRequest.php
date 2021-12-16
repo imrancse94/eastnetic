@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-
 class OrderRequest extends BaseRequest
 {
     
@@ -27,7 +26,7 @@ class OrderRequest extends BaseRequest
             'product_id'=>[
                 'required',
                 'integer',
-                'gt:0'              
+                'gt:0'            
             ],
 
             'qty'=>[
@@ -37,4 +36,7 @@ class OrderRequest extends BaseRequest
             ]
         ];
     }
+
+    
+    
 }

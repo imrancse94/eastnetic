@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-
+use Illuminate\Validation\Rule;
 class OrderEditRequest extends BaseRequest
 {
     /**
@@ -25,7 +25,8 @@ class OrderEditRequest extends BaseRequest
         return [
             'order_status'=>[
                 'required',
-                'integer'        
+                'integer',
+                Rule::in($this->order_status_types()),       
             ],
 
             'qty'=>[
@@ -34,5 +35,23 @@ class OrderEditRequest extends BaseRequest
                 'gt:0'
             ]
         ];
+    }
+
+    private function order_status_types(){
+        
+        $status_array = [];
+
+        if(auth()->user()->user_type == config('constant.ADMIN_USER_TYPE')){
+            $status_array[] = config('constant.ORDER_APPROVED');
+            $status_array[] = config('constant.ORDER_REJECTED');
+            $status_array[] = config('constant.ORDER_PROCESSING');
+            $status_array[] = config('constant.ORDER_SHIPPED');
+            $status_array[] = config('constant.ORDER_DELIVERED');
+        }else{
+            //$status_array[] = config('constant.ORDER_PENDING');
+            $status_array[] = config('constant.ORDER_CANCELED');
+        }
+        
+        return $status_array;
     }
 }

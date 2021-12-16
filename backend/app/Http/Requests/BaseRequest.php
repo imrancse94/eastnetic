@@ -39,4 +39,6 @@ class BaseRequest extends FormRequest
         $errorData = $errors;
         throw new HttpResponseException($this->sendError("validation error", $errorData,config('constant.VALIDATION_ERROR')));
     }
+
+    
 }

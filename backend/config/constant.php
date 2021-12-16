@@ -2,6 +2,8 @@
 
 return [
     
+    'PERMISSION_ERROR'=>"P401",
+    'ADMIN_USER_TYPE'=>1,
     'DEFAULT_PAGINATE_LIMIT'=>10,
     'ADMIN_EMAIL'=>'imrancse94@gmail.com',
 
@@ -14,6 +16,7 @@ return [
     'ORDER_PROCESSING'=> 3,
     'ORDER_SHIPPED'=> 4,
     'ORDER_DELIVERED'=> 5,
+    'ORDER_CANCELED'=> 6,
 
     'PRODUCT_ADD_SUCCESS'=>100,
     'PRODUCT_ADD_FAILED'=>-100,
@@ -47,4 +50,7 @@ return [
 
     'ORDER_GET_SUCCESS'=>110,
     'ORDER_GET_FAILED'=>-110,
+    
+    'ORDER_DELETE_SUCCESS'=>110,
+    'ORDER_DELETE_FAILED'=>-110,
 ];

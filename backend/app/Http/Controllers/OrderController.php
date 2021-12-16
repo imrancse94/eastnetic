@@ -19,7 +19,7 @@ class OrderController extends Controller
     // add new order
     public function addOrder(OrderRequest $request){
         
-        $inputData = $request->all();
+        $inputData = $request->only('product_id','qty');
         
         $message = __("Order added failed.");
         $code = config('constant.ORDER_ADDED_FAILED');
@@ -61,7 +61,7 @@ class OrderController extends Controller
             
             
         }catch(\Exception $ex){
-            dd($ex->getMessage());
+            //dd($ex->getMessage());
         }
 
         return $this->sendResponse($data,$message,$code);
@@ -70,9 +70,11 @@ class OrderController extends Controller
     // edit order by id
     public function editOrder($order_id,OrderEditRequest $request){
 
-        $inputData = $request->all();
-        $user_id = auth()->user()->id;
-        $result = $this->orderService->orderEdit($order_id,$user_id,$inputData);
+        $inputData = $request->only('order_status','qty');
+        $user = auth()->user();
+        $user_id = $user->id;
+        $user_type = $user->user_type;
+        $result = $this->orderService->orderEdit($order_id,$user_id,$user_type,$inputData);
         
         if($result['status']){
             $message = __("Order edit success.");
@@ -117,7 +119,15 @@ class OrderController extends Controller
     
 
     // delete order by order id
-    public function deleteOrderById(){
-        
+    public function deleteOrderById($order_id){
+        $user_id = auth()->user()->id;
+        $message = __("Order deleted failed.");
+        $code = config('constant.ORDER_DELETE_FAILED');
+        if($this->orderService->orderDeleteById($order_id,$user_id)){
+            $message = __("Order deleted success.");
+            $code = config('constant.ORDER_DELETE_SUCCESS');
+        }
+
+        return $this->sendResponse([],$message,$code);
     }
 }

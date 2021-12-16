@@ -4,9 +4,10 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Traits\FileUploadTrait;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 class ProductService extends Service{
     
-    use FileUploadTrait;
+    use FileUploadTrait,DatabaseTransactions;
 
     // new product add
     public function productAdd($inputData){
@@ -18,7 +19,7 @@ class ProductService extends Service{
 
             $product = Product::create($inputData);
         }catch(\Exception $ex){
-            dd($ex->getMessage());
+           // dd($ex->getMessage());
         }
         return $product;
     }
@@ -38,7 +39,7 @@ class ProductService extends Service{
             }
             
         }catch(\Exception $ex){
-            dd($ex->getMessage());
+           // dd($ex->getMessage());
         }
 
         return $data;
@@ -50,7 +51,7 @@ class ProductService extends Service{
         try{
             $data = Product::where('id',$id)->delete();
         }catch(\Exception $ex){
-            dd($ex->getMessage());
+            //dd($ex->getMessage());
         }
 
         return $data;

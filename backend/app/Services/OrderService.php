@@ -40,7 +40,7 @@ class OrderService extends Service{
     }
 
     // order edit by id
-    public function orderEdit($order_id,$user_id,$inputData){
+    public function orderEdit($order_id,$user_id,$user_type,$inputData){
         $result['status'] = false;
         
         try{
@@ -48,11 +48,16 @@ class OrderService extends Service{
 
             // get order by id
             $order = Order::where('id',$order_id)
-                            ->where('user_id',$user_id)
-                            ->whereNotIn('order_status',[
-                                config('constant.ORDER_APPROVED'),
-                                config('constant.ORDER_REJECTED')
-                            ])->first();
+                            ->where('user_id',$user_id);
+
+            if($user_type != config('constant.ADMIN_USER_TYPE')){
+                $order = $order->whereNotIn('order_status',[
+                    config('constant.ORDER_APPROVED'),
+                    config('constant.ORDER_REJECTED')
+                ]);
+            }                
+                           
+            $order = $order->first();
 
             if(empty($order)){
                 $result['data'] = "No order found";
@@ -92,8 +97,8 @@ class OrderService extends Service{
     }
 
     // order delete by id
-    public function orderDeleteById($id){
-        return Order::where('id',$id)->delete();
+    public function orderDeleteById($order_id,$user_id){
+        return Order::where(['id'=>$order_id,'user_id'=>$user_id])->delete();
     }
 
     // get order by id
@@ -108,8 +113,7 @@ class OrderService extends Service{
 
     // get all active orders
     public function getAllordersByUserId($user_id,$params = []){
-        $order = Order::query();
-        $order = $order->where('user_id',$user_id);
+        $order = Order::query()->where('user_id',$user_id);
         if(!empty($params['order_status'])){
             $order = $order->where('order_status',$params['order_status']);
         }
@@ -135,7 +139,7 @@ class OrderService extends Service{
         return OrderHistory::create($inputData);
     }
 
-
+    // order logical validation
     private function productValidation($product,$product_id,$qty){
 
         // product exist check

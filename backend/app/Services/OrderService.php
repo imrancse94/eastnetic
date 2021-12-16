@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Services\ProductService;
+use App\Models\Delivery;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 class OrderService extends Service{
     
@@ -20,22 +21,23 @@ class OrderService extends Service{
         // order validation validation
         $result['data'] = $this->productValidation($product,$inputData['product_id'],$inputData['qty']);
         
-        $latest_order_id = Order::query()->orderByDesc('id')->value('id');
-        if(empty($latest_order_id)){
-            $latest_order_id = 0;
+        if(!empty($result['data'])){
+            return $result;
         }
         
-        $inputData['unique_order_id'] = str_pad($latest_order_id + 1, 8, "0", STR_PAD_LEFT);
         $inputData['unit_price'] = $product->unit_price;
         $inputData['order_status'] = config('constant.ORDER_PENDING');
-
+        
         if($result['data'] = Order::create($inputData)){
+            $updateData['unique_order_id'] = str_pad($result['data']['id'], 8, "0", STR_PAD_LEFT);
+            
+            Order::where('id',$result['data']['id'])->update($updateData);
             $result['data']['name'] = $product->name;
             $result['status'] = true;
             // $product->qty = $product->qty - $inputData['qty'];
             // $product->save();
         }
-
+        
         return $result;
     }
 
@@ -49,7 +51,7 @@ class OrderService extends Service{
             // get order by id
             $order = Order::where('id',$order_id)
                             ->where('user_id',$user_id);
-
+            
             if($user_type != config('constant.ADMIN_USER_TYPE')){
                 $order = $order->whereNotIn('order_status',[
                     config('constant.ORDER_APPROVED'),
@@ -71,14 +73,18 @@ class OrderService extends Service{
             $result['data'] = $this->productValidation($product,$order->product_id,$requested_qty);
 
             if(empty($result['data'])){
+                
                 $updateData['qty'] = $inputData['qty'];
                 $updateData['order_status'] = $inputData['order_status'];
+                
                 if($order->update($updateData)){
+                    if($updateData['order_status'] ==  config('constant.ORDER_DELIVERED')){
+                        $product->qty = $product->qty - ($requested_qty);
+                        $product->save();
+                    }
+
                     $changes = $order->getChanges();
                     if(!empty($changes)){
-                        // $product->qty = $product->qty - ($requested_qty);
-                        // $product->save();
-                        
                         // add order history
                         OrderHistory::create([
                             'order_id'=>$order->id,
@@ -91,7 +97,7 @@ class OrderService extends Service{
             }
 
         }catch(\Exception $ex){
-            dd($ex->getMessage());
+           // dd($ex->getMessage());
         }   
         return $result;
     }
@@ -129,6 +135,39 @@ class OrderService extends Service{
         return OrderHistory::where($clause)->get();
     }
 
+    // order move to delivered
+    public function orderMoveToDelivered(){
+        $result = false;
+        $orders = Order::where([
+            'order_status'=>config('constant.ORDER_DELIVERED')
+        ])->select([
+            'id',
+            'order_status',
+            'product_id',
+            'unique_order_id',
+            'unit_price',
+            'user_id',
+            'qty'
+        ]);
+        $orderData = $orders->get();
+        $deliveries = [];
+        if(!empty($orderData)){
+            foreach($orderData as $order){
+                $order->order_id = $order->id;
+                unset($order->id);
+                $deliveries[] = $order->toArray();
+            }
+
+            if(!empty($deliveries)){
+                if(Delivery::insert($deliveries)){
+                    $orders->delete();
+                    $result = true;
+                }
+            }
+        }
+
+        return $result;
+    }
 
     // add order history
     public function addOrderHistory($inputData){
@@ -141,7 +180,7 @@ class OrderService extends Service{
 
     // order logical validation
     private function productValidation($product,$product_id,$qty){
-
+        
         // product exist check
         if(is_null($product)){
             return "There is no product by product_id {$product_id}";

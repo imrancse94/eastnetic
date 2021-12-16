@@ -44,4 +44,7 @@ return [
 
     'ORDER_LIST_SUCCESS'=>109,
     'ORDER_LIST_FAILED'=>-109,
+
+    'ORDER_GET_SUCCESS'=>110,
+    'ORDER_GET_FAILED'=>-110,
 ];

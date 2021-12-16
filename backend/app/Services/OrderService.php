@@ -5,9 +5,11 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\OrderHistory;
 use App\Services\ProductService;
-
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 class OrderService extends Service{
     
+    use DatabaseTransactions;
+
     // new order add
     public function orderAdd($inputData){
         $result['status'] = false;
@@ -41,8 +43,6 @@ class OrderService extends Service{
     public function orderEdit($order_id,$user_id,$inputData){
         $result['status'] = false;
         
-        \DB::beginTransaction();
-
         try{
             $productservice = new ProductService;
 
@@ -82,12 +82,10 @@ class OrderService extends Service{
                     }
                     $result['status'] = true;
                     $result['data'] = $inputData;
-                    \DB::commit();
                 }
             }
 
         }catch(\Exception $ex){
-            \DB::rollback();
             dd($ex->getMessage());
         }   
         return $result;
@@ -99,8 +97,8 @@ class OrderService extends Service{
     }
 
     // get order by id
-    public function getorderById($id){
-        return Order::where('id',$id)->first();
+    public function getOrderByIdWithUserId($order_id,$user_id){
+        return Order::where(['id'=>$order_id,'user_id'=>$user_id])->first();
     }
 
     // get all active orders

@@ -73,8 +73,6 @@ class OrderController extends Controller
         $inputData = $request->all();
         $user_id = auth()->user()->id;
         $result = $this->orderService->orderEdit($order_id,$user_id,$inputData);
-
-        
         
         if($result['status']){
             $message = __("Order edit success.");
@@ -105,7 +103,16 @@ class OrderController extends Controller
 
     // get order by order id
     public function getOrderById($order_id){
-        
+        $user_id = auth()->user()->id;
+        $data = $this->orderService->getOrderByIdWithUserId($order_id,$user_id);
+        $message = __("Order get failed.");
+        $code = config('constant.ORDER_GET_FAILED');
+        if(!empty($data)){
+            $message = __("Order get success.");
+            $code = config('constant.ORDER_GET_SUCCESS');
+        }
+
+        return $this->sendResponse($data,$message,$code);
     }
     
 

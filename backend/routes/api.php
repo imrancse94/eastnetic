@@ -16,21 +16,18 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 // auth login
 Route::post('login',[AuthController::class,'login']);
-//user 
+
+//user signup
 Route::post('user/signup',[AuthController::class,'userSignup']);
 
+
+// auth middleware
 Route::group(['middleware' => ['auth:api']], function() {
 
-    // 
-    Route::group(['middleware'=>'role.check'],function(){
-        
-        // For product CRUD
+    // For product CRUD by admin
+    Route::group(['middleware'=>'AdminRole'],function(){
         Route::post('product/add/',[ProductController::class,'addProduct']);
         Route::put('product/edit/{id}',[ProductController::class,'editProduct']);
         Route::get('product/list',[ProductController::class,'getProductList']);
@@ -38,16 +35,17 @@ Route::group(['middleware' => ['auth:api']], function() {
         Route::delete('product/delete/{product_id}',[ProductController::class,'deleteProductById']);
     });
 
-    
+    // For buyer orders 
+    Route::group(['middleware'=>'BuyerRole'],function(){
+        Route::post('order/add/',[OrderController::class,'addOrder']);
+        Route::delete('order/delete/{order_id}',[OrderController::class,'deleteOrderById']);
+    });
 
-   
-
-
-    // For orders
-    Route::post('order/add/',[OrderController::class,'addOrder']);
+    // For buyer and admin both orders 
     Route::put('order/edit/{order_id}',[OrderController::class,'editOrder']);
     Route::get('order/list',[OrderController::class,'getOrderListByUserId']);
     Route::get('order/{order_id}',[OrderController::class,'getOrderById']);
-    Route::delete('order/delete/{order_id}',[OrderController::class,'deleteOrderById']);
 
+    Route::get('user/logout',[AuthController::class,'logout']);
+    
 });

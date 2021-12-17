@@ -5,8 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponseTrait;
-
-class RoleCheck
+class AdminRole
 {
     use ApiResponseTrait;
     /**

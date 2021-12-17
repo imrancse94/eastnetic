@@ -3,7 +3,10 @@
 return [
     
     'PERMISSION_ERROR'=>"P401",
+
     'ADMIN_USER_TYPE'=>1,
+    'BUYER_USER_TYPE'=>2,
+
     'DEFAULT_PAGINATE_LIMIT'=>10,
     'ADMIN_EMAIL'=>'imrancse94@gmail.com',
 
@@ -53,4 +56,7 @@ return [
     
     'ORDER_DELETE_SUCCESS'=>110,
     'ORDER_DELETE_FAILED'=>-110,
+
+    'USER_LOGOUT_SUCCESS'=>111,
+    'USER_LOGOUT_FAILED'=>-111,
 ];

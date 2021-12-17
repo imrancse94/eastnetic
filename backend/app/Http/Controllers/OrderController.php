@@ -89,8 +89,11 @@ class OrderController extends Controller
     // get all order list by user_id
     public function getOrderListByUserId(){
         $params = request()->all();
-        $user_id = auth()->user()->id;
-        $data = $this->orderService->getAllordersByUserId($user_id,$params);
+        $user = auth()->user();
+        $user_id = $user->id;
+        $user_type = $user->user_type;
+
+        $data = $this->orderService->getAllordersByUserId($user_id,$user_type,$params);
 
         $message = __("Order list get failed.");
         $code = config('constant.ORDER_LIST_FAILED');
@@ -105,8 +108,10 @@ class OrderController extends Controller
 
     // get order by order id
     public function getOrderById($order_id){
-        $user_id = auth()->user()->id;
-        $data = $this->orderService->getOrderByIdWithUserId($order_id,$user_id);
+        $user = auth()->user();
+        $user_id = $user->id;
+        $user_type = $user->user_type;
+        $data = $this->orderService->getOrderByIdWithUserId($order_id,$user_id,$user_type);
         $message = __("Order get failed.");
         $code = config('constant.ORDER_GET_FAILED');
         if(!empty($data)){

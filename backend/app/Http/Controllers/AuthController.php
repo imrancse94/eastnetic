@@ -62,5 +62,13 @@ class AuthController extends Controller
         
         return $this->sendResponse($data,$message,$code);
     }
+
+
+    public function logout()
+    {
+        auth()->logout();
+        $message = "Successfully logged out.";
+        return $this->sendResponse([],$message,config('constant.USER_LOGOUT_SUCCESS'));
+    }
     
 }

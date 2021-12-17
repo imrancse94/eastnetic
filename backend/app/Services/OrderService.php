@@ -108,8 +108,13 @@ class OrderService extends Service{
     }
 
     // get order by id
-    public function getOrderByIdWithUserId($order_id,$user_id){
-        return Order::where(['id'=>$order_id,'user_id'=>$user_id])->first();
+    public function getOrderByIdWithUserId($order_id,$user_id,$user_type){
+        $clause['id'] = $order_id;
+        if($user_type == config('constant.BUYER_USER_TYPE')){
+            $clause['user_id'] = $user_id;
+        }
+        
+        return Order::where($clause)->first();
     }
 
     // get all active orders
@@ -118,8 +123,11 @@ class OrderService extends Service{
     }
 
     // get all active orders
-    public function getAllordersByUserId($user_id,$params = []){
-        $order = Order::query()->where('user_id',$user_id);
+    public function getAllordersByUserId($user_id,$user_type,$params = []){
+        $order = Order::query();
+        if($user_type == config('constant.BUYER_USER_TYPE')){
+            $order = $order->where('user_id',$user_id);
+        }
         if(!empty($params['order_status'])){
             $order = $order->where('order_status',$params['order_status']);
         }

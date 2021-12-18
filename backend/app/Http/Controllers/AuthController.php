@@ -63,6 +63,12 @@ class AuthController extends Controller
         return $this->sendResponse($data,$message,$code);
     }
 
+    public function getAuthUser(){
+        $message = "Successfully get data.";
+        $data = auth()->user();
+        $data['access_token'] = request()->bearerToken();
+        return $this->sendResponse($data,$message,config('constant.AUTH_USER_SUCCESS'));
+    }
 
     public function logout()
     {

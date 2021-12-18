@@ -59,4 +59,6 @@ return [
 
     'USER_LOGOUT_SUCCESS'=>111,
     'USER_LOGOUT_FAILED'=>-111,
+
+    'AUTH_USER_SUCCESS'=>112,
 ];

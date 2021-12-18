@@ -1,18 +1,14 @@
 <template>
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>{{header}}</h1>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="bg-gray-800">
+    <div class="bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
+      <h3 class="font-bold pl-2">{{ header }}</h3>
+    </div>
+  </div>
 </template>
 
 <script>
-export default{
-    name:'ContentPageHeader',
-    props:['header']
-}
+export default {
+  name: "ContentPageHeader",
+  props: ["header"],
+};
 </script>

@@ -31,5 +31,5 @@ export const getRefreshToken = () => {
 
 export const removeToken = () => {
     Cookies.remove('access_token');
-    Cookies.remove('refresh_token');
+    //Cookies.remove('refresh_token');
 }

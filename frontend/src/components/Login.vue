@@ -34,7 +34,7 @@
 export default {
   data() {
     return {
-      email: "ssadmin@admin.com",
+      email: "imrancse94@gmail.com",
       password: "123456",
       errors:{}
     };
@@ -50,8 +50,8 @@ export default {
         .then((response) => {
           if (response.success) {
             self.$store.dispatch("loading/stopLoading");
-            this.$router.push("/admin");
-            this.$toast.success("Successfully loggedin");
+            this.$router.push({name:"dashboard"});
+            this.$toastr.s("Successfully loggedin", "Success");
           } else {
             this.has_error = true;
             this.errors = response;

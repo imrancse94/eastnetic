@@ -1,12 +1,13 @@
-
-import {createRouter, createWebHistory}  from 'vue-router'
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import store from './../store';
 import routes from './routes';
+Vue.use(VueRouter);
 
 
-
-const router = createRouter({
-    history:createWebHistory(),
+const router = new VueRouter({
+    mode: 'history',
+    base: process.env.BASE_URL,
     routes
 })
 
@@ -26,14 +27,12 @@ function isRoutePermitted(route_name) {
     var result = false;
 
     const permissionList = store.getters['auth/getPermissionList'];
-    
+    //console.log('permissionList', permissionList)
     if (!permissionList) {
         return true;
     }
-    
     let l = router.resolve({ name: route_name });
-    console.log('resolved', l.matched)
-    if (permissionList.includes(route_name) && l.matched.length > 0) {
+    if (permissionList.includes(route_name) && l.resolved.matched.length > 0) {
         result = true;
     }
 

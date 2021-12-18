@@ -4,7 +4,9 @@ import { setToken, setRefreshToken, removeToken } from './../../Helper'
 export const setLogout = ({ commit }) => {
     commit('SET_LOGOUT');
     removeToken();
-
+    return auth.logout().then(({ data }) => {
+        return Promise.resolve(data);
+    })
 }
 
 export const setPermissionStatus = ({ commit }, payload) => {
@@ -16,7 +18,7 @@ export const login = ({ commit }, user) => {
         const response = data.data;
         if (response.access_token) {
             setToken(response.access_token)
-            setRefreshToken(response.refresh_token)
+            //setRefreshToken(response.refresh_token)
             commit('SET_LOGIN', response);
         }
 

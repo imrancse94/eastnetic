@@ -1,5 +1,6 @@
-import {createStore} from 'vuex';
-
+import Vue from 'vue';
+import Vuex from 'vuex';
+Vue.use(Vuex);
 
 import auth from "./auth";
 import module from "./module";
@@ -11,10 +12,12 @@ import test from './test';
 import Role from "./Role";
 import User from "./user";
 import Usergroup from "./usergroup";
+import order from "./order";
 
-export default createStore({
+export default new Vuex.Store({
     modules: {
         auth,
+        order,
         test,
         loading,
         module,
@@ -23,6 +26,6 @@ export default createStore({
         RolePage,
         Role,
         User,
-        Usergroup
+        Usergroup,
     }
 });

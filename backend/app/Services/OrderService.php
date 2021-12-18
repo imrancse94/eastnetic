@@ -11,6 +11,17 @@ class OrderService extends Service{
     
     use DatabaseTransactions;
 
+    public static function order_status_array(){ 
+        return [
+            config('constant.ORDER_PENDING') => "PENDING",
+            config('constant.ORDER_APPROVED') => "APPROVED",
+            config('constant.ORDER_REJECTED') => "REJECTED",
+            config('constant.ORDER_PROCESSING') => "PROCESSING",
+            config('constant.ORDER_SHIPPED') => "SHIPPED",
+            config('constant.ORDER_DELIVERED') => "DELIVERED",
+            config('constant.ORDER_CANCELED') => "CANCEL",
+        ];
+}
     // new order add
     public function orderAdd($inputData){
         $result['status'] = false;
@@ -131,8 +142,14 @@ class OrderService extends Service{
         if(!empty($params['order_status'])){
             $order = $order->where('order_status',$params['order_status']);
         }
-
-        return $order->simplePaginate(config('constant.DEFAULT_PAGINATE_LIMIT'));
+        $order = $order->simplePaginate(config('constant.DEFAULT_PAGINATE_LIMIT'));
+        if(!empty($order)){
+            foreach($order as $o){
+                $o->order_status = self::order_status_array()[$o->order_status];
+            }
+            
+        }
+        return $order;
     }
 
     // get order history by order id

@@ -1,17 +1,18 @@
 import { Api } from './index';
-import { CLIENT_ID, CLIENT_SECRET } from './../config'
 
 export default {
     login(user) {
         return Api.post('login', {
-            client_id: CLIENT_ID,
-            client_secret: CLIENT_SECRET,
-            username: user.email,
+            email: user.email,
             password: user.password
-        })
+        });
     },
 
     async getAuthData() {
-        return await Api.get('auth-user-data');
+        return await Api.get('auth/user');
+    },
+
+    logout(){
+        return Api.post('user/logout',{});
     }
 }

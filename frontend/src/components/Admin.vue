@@ -1,6 +1,7 @@
 <template>
   <div>
     {{ isIdle }}
+
     <Header />
     <div class="flex flex-col md:flex-row">
       <Sidebar />

@@ -7,7 +7,7 @@ const routes = [{
         isIndex: false,
         requiresAuth: true
     },
-    redirect: { name: "dashboard" },
+    redirect: { name: "dashboard.index" },
     children: [
         {
             path: '',

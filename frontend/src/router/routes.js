@@ -10,7 +10,7 @@ const routes = [{
     redirect: { name: "dashboard.index" },
     children: [
         {
-            path: '',
+            path: 'dashboard',
             name: 'dashboard.index',
             component: () =>
                 import ('../components/Content/Dashboard/index.vue'),
@@ -36,6 +36,15 @@ const routes = [{
             name: 'order.index',
             component: () =>
                 import ('../components/Content/Order/index.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'edit',
+            name: 'order.edit',
+            component: () =>
+                import ('../components/Content/Order/edit.vue'),
             meta: {
                 requiresAuth: true,
             }

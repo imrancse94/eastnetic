@@ -9,7 +9,8 @@ import jwt from "jsonwebtoken";
 import {API_BASE_URL} from './config';
 
 // CSS
-import './assets/css/style.css'
+//import './assets/css/style.css'
+import './assets/tailwind/index.css'
 import './assets/css/custom.css'
 
 // If you don't need the styles, do not connect

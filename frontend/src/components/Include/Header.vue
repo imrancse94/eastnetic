@@ -50,7 +50,7 @@
           md:w-1/3 md:justify-end
         "
       >
-        <div class="relative inline-block pr-2">
+        <div class="relative inline-block pr-2 w-full text-right">
           <button
             @click.prevent="toggleDD"
             ref="profile_section"
@@ -78,6 +78,7 @@
               bg-white
               ring-1 ring-black ring-opacity-5
               focus:outline-none
+              text-left
             "
             :class="isShowProfileDropdown ? '':'invisible'"
             role="menu"

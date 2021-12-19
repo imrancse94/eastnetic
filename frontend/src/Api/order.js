@@ -10,9 +10,10 @@ export default {
     //     return Api.post('moduleAdd', params)
     // },
 
-    // getModuleById(params) {
-    //     return Api.get('module/edit/' + params)
-    // },
+    getorderById(params) {
+        console.log('params',params)
+        return Api.get('order/' + params)
+    },
 
     // moduleEdit(params) {
 

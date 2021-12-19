@@ -52,7 +52,7 @@ import GLOBAL_CONSTANT from './constant';
 
 // import plugin
 import VueToastr from "vue-toastr";
-
+//import APPLICATION_GLOBAL_CONSTANT
 // sweetallert2 plugin
 Vue.use(VueSweetalert2);
 // tostr
@@ -64,10 +64,11 @@ Vue.use(VueToastr, {
 Vue.component("vue-toastr", VueToastr);
 
 Vue.config.productionTip = false
+Vue.prototype.$global_contsant = GLOBAL_CONSTANT;
 const jwt_secret = "pIW9AWDEGRTSwjnOXXFNvVphue7ox7t88ysdaUMlWgFtSngX0mSmJXuFydNaYJ6g";
 var token = getToken();
 const eventsHub = new Vue();
-const inactiveTime = 100 // min
+const inactiveTime = 10 // min
 Vue.use(IdleVue, {
     eventEmitter: eventsHub,
     store,
@@ -76,14 +77,9 @@ Vue.use(IdleVue, {
 });
 
 const main = () => {
-    var mixin = {
-            data: function() {
-                return { GLOBAL_CONSTANT }
-            }
-        }
         // vue app initialization
     new Vue({
-        mixins: [mixin],
+        
         store,
         router,
         render: h => h(App)

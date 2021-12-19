@@ -124,8 +124,17 @@ class OrderService extends Service{
         if($user_type == config('constant.BUYER_USER_TYPE')){
             $clause['user_id'] = $user_id;
         }
+
+        $data['order'] = Order::where($clause)->first();
+        //$data['order']->order_status = self::order_status_array()[$data['order']->order_status];
+        $data['order_history'] = OrderHistory::where(['order_id'=>$data['order']->id])->get();
         
-        return Order::where($clause)->first();
+        if(!empty($data['order_history'])){
+            foreach($data['order_history'] as $oh){
+                $oh->data = json_decode($oh->data,true);
+            }
+        }
+        return $data;
     }
 
     // get all active orders

@@ -24,9 +24,11 @@
                 "
                 for="grid-first-name"
               >
-                First Name
+                Unique ID
               </label>
               <input
+              disabled="disbaled"
+              v-model="order.unique_id"
                 class="
                   appearance-none
                   block
@@ -49,114 +51,7 @@
                 Please fill out this field.
               </p>
             </div>
-            <div class="w-full md:w-1/2 px-3">
-              <label
-                class="
-                  block
-                  uppercase
-                  tracking-wide
-                  text-gray-700 text-xs
-                  font-bold
-                  mb-2
-                "
-                for="grid-last-name"
-              >
-                Last Name
-              </label>
-              <input
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  bg-gray-200
-                  text-gray-700
-                  border border-gray-200
-                  rounded
-                  py-3
-                  px-4
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-gray-500
-                "
-                id="grid-last-name"
-                type="text"
-                placeholder="Doe"
-              />
-            </div>
-          </div>
-          <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full px-3">
-              <label
-                class="
-                  block
-                  uppercase
-                  tracking-wide
-                  text-gray-700 text-xs
-                  font-bold
-                  mb-2
-                "
-                for="grid-password"
-              >
-                Password
-              </label>
-              <input
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  bg-gray-200
-                  text-gray-700
-                  border border-gray-200
-                  rounded
-                  py-3
-                  px-4
-                  mb-3
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-gray-500
-                "
-                id="grid-password"
-                type="password"
-                placeholder="******************"
-              />
-              <p class="text-gray-600 text-xs italic">
-                Make it as long and as crazy as you'd like
-              </p>
-            </div>
-          </div>
-          <div class="flex flex-wrap -mx-3 mb-2">
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-              <label
-                class="
-                  block
-                  uppercase
-                  tracking-wide
-                  text-gray-700 text-xs
-                  font-bold
-                  mb-2
-                "
-                for="grid-city"
-              >
-                City
-              </label>
-              <input
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  bg-gray-200
-                  text-gray-700
-                  border border-gray-200
-                  rounded
-                  py-3
-                  px-4
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-gray-500
-                "
-                id="grid-city"
-                type="text"
-                placeholder="Albuquerque"
-              />
-            </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
                 class="
                   block
@@ -172,6 +67,7 @@
               </label>
               <div class="relative">
                 <select
+                  v-model="order.order_status"
                   class="
                     block
                     appearance-none
@@ -188,9 +84,9 @@
                   "
                   id="grid-state"
                 >
-                  <option>New Mexico</option>
-                  <option>Missouri</option>
-                  <option>Texas</option>
+                  <option disabled>Pleae select</option>
+                  <option :value="index" v-for="(o,index) in order_status_list" :key="index" >{{o}}</option>
+
                 </select>
                 <div
                   class="
@@ -216,7 +112,9 @@
                 </div>
               </div>
             </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+          </div>
+          <div class="flex flex-wrap -mx-3 mb-6">
+            <div class="w-full md:w-1/3 px-3">
               <label
                 class="
                   block
@@ -226,11 +124,12 @@
                   font-bold
                   mb-2
                 "
-                for="grid-zip"
+                for="grid-password"
               >
-                Zip
+                Quantity
               </label>
               <input
+                v-model="order.qty"
                 class="
                   appearance-none
                   block
@@ -244,11 +143,92 @@
                   leading-tight
                   focus:outline-none focus:bg-white focus:border-gray-500
                 "
-                id="grid-zip"
+                id="grid-last-name"
                 type="text"
-                placeholder="90210"
+                placeholder="Doe"
               />
+             
             </div>
+            <div class="w-full md:w-1/3 px-3">
+              <label
+                class="
+                  block
+                  uppercase
+                  tracking-wide
+                  text-gray-700 text-xs
+                  font-bold
+                  mb-2
+                "
+                for="grid-password"
+              >
+                Unit Price
+              </label>
+              <input
+                v-model="order.unit_price"
+                disabled="disabled"
+                class="
+                  appearance-none
+                  block
+                  w-full
+                  bg-gray-200
+                  text-gray-700
+                  border border-gray-200
+                  rounded
+                  py-3
+                  px-4
+                  leading-tight
+                  focus:outline-none focus:bg-white focus:border-gray-500
+                "
+                id="grid-last-name"
+                type="text"
+                placeholder="Doe"
+              />
+             
+            </div>
+            <div class="w-full md:w-1/3 px-3">
+              <label
+                class="
+                  block
+                  uppercase
+                  tracking-wide
+                  text-gray-700 text-xs
+                  font-bold
+                  mb-2
+                "
+                for="grid-password"
+              >
+                Total Price
+              </label>
+              <input
+                disabled
+                v-model="total_price"
+                class="
+                  appearance-none
+                  block
+                  w-full
+                  bg-gray-200
+                  text-gray-700
+                  border border-gray-200
+                  rounded
+                  py-3
+                  px-4
+                  leading-tight
+                  focus:outline-none focus:bg-white focus:border-gray-500
+                "
+                id="grid-last-name"
+                type="text"
+              />
+             
+            </div>
+          </div>
+          <div class="flex flex-wrap -mx-3 mb-2">
+            <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+              <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">Save</button>
+            </div>
+            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+              <router-link :to="{name:'order.index'}" class="w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center block"> Back</router-link>
+            </div>
+            
           </div>
         </form>
         </div>
@@ -335,23 +315,7 @@
               >
                 Unit Price
               </th>
-              <th
-                class="
-                  p-3
-                  font-bold
-                  uppercase
-                  bg-gradient-to-b
-                  from-gray-300
-                  to-gray-100
-                  bg-gray-200
-                  text-gray-600
-                  border border-gray-300
-                  hidden
-                  lg:table-cell
-                "
-              >
-                Actions
-              </th>
+              
             </tr>
           </thead>
           <tbody>
@@ -495,44 +459,7 @@
                 >
                 DDDD
               </td>
-              <td
-                class="
-                  w-full
-                  lg:w-auto
-                  p-3
-                  text-gray-800 text-center
-                  border border-b
-                  text-center
-                  block
-                  lg:table-cell
-                  relative
-                  lg:static
-                "
-              >
-                <span
-                  class="
-                    lg:hidden
-                    absolute
-                    top-0
-                    left-0
-                    bg-blue-200
-                    px-2
-                    py-1
-                    text-xs
-                    font-bold
-                    uppercase
-                  "
-                  >Actions</span
-                >
-                <a href="#" class="text-blue-400 hover:text-blue-600 underline"
-                  >Edit</a
-                >
-                <a
-                  href="#"
-                  class="text-blue-400 hover:text-blue-600 underline pl-6"
-                  >Remove</a
-                >
-              </td>
+              
             </tr>
           </tbody>
         </table>
@@ -554,18 +481,40 @@ export default {
   name: "ModuleAdd",
   data() {
     return {
-      module: {
-        id: "",
-        name: "",
-        icon: "",
-        sequence: "",
+      order:{
+        unique_id:null,
+        qty:null,
+        unit_price:null,
+        order_status:null,
       },
+      total_price:0,
+      order_status_list:this.$global_contsant.order_status_list,
+      orderHistoryData:{},
       errors: {},
     };
   },
+  mounted(){
+    
+    this.orderData = {};
+    this.orderHistoryData = {};
+    
+    this.getorderById(this.$router.currentRoute.params.id).then((data) => {
+      console.log(data)
+      this.order.unique_id = data.order.unique_order_id
+      this.order.qty = data.order.qty
+      this.order.unit_price = data.order.unit_price
+      this.order.order_status = data.order.order_status
+      this.total_price = data.order.qty*data.order.unit_price
+      if(data.order_history){
+        this.orderHistoryData = data.order_history;
+      }
+      
+      
+    });
+  },
   computed: {},
   methods: {
-    ...mapActions("module", ["moduleAdd"]),
+    ...mapActions("order", ["getorderById"]),
 
     addModule() {
       this.moduleAdd(this.module)

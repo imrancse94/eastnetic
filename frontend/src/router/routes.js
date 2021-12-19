@@ -41,7 +41,7 @@ const routes = [{
             }
         },
         {
-            path: 'edit',
+            path: 'edit/:id',
             name: 'order.edit',
             component: () =>
                 import ('../components/Content/Order/edit.vue'),

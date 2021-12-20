@@ -9,10 +9,8 @@ import RolePage from "./RolePage";
 import Page from "./page";
 import loading from "./loading";
 import test from './test';
-import Role from "./Role";
-import User from "./user";
-import Usergroup from "./usergroup";
 import order from "./order";
+import product from "./product";
 
 export default new Vuex.Store({
     modules: {
@@ -20,12 +18,6 @@ export default new Vuex.Store({
         order,
         test,
         loading,
-        module,
-        submodule,
-        Page,
-        RolePage,
-        Role,
-        User,
-        Usergroup,
+        product
     }
 });

@@ -151,7 +151,7 @@ class OrderService extends Service{
         if(!empty($params['order_status'])){
             $order = $order->where('order_status',$params['order_status']);
         }
-        $order = $order->simplePaginate(config('constant.DEFAULT_PAGINATE_LIMIT'));
+        $order = $order->paginate(config('constant.DEFAULT_PAGINATE_LIMIT'));
         if(!empty($order)){
             foreach($order as $o){
                 $o->order_status = self::order_status_array()[$o->order_status];

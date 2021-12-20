@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Services\ProductService;
 use App\Http\Requests\ProductRequest;
-use Symfony\Component\Console\Input\Input;
-
+use App\Traits\FileUploadTrait;
 class ProductController extends Controller
 {
+    use FileUploadTrait;
+    
     private $productService;
 
     public function __construct(ProductService $productService)
@@ -22,6 +23,9 @@ class ProductController extends Controller
         $code = config('constant.PRODUCT_ADD_FAILED');
         $data = [];
         if($data = $this->productService->productAdd($inputData)){
+            if(!empty($data['image'])){
+                $data['image'] = $this->getImageByFilePath($data['image']);
+            }
             $message = __("Product added successfully.");
             $code = config('constant.PRODUCT_ADD_SUCCESS');
         }

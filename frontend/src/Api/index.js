@@ -45,13 +45,13 @@ Api.interceptors.request.use(function(config) {
 Api.interceptors.response.use(
     response => {
         req.done();
-        //console.log('response.success', response);
+        console.log('response.success', response);
         //console.log('response loader_status', store.getters['loading/getLoaderStatus']);
         return response;
     },
     error => {
         req.done();
-        //console.log('resquest.error', error);
+        console.log('resquest.error', error);
         //store.dispatch('auth/setLogout');
         //router.push({name:'Login'})
         return Promise.reject(error);

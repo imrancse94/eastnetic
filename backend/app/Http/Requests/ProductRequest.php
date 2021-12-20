@@ -30,8 +30,8 @@ class ProductRequest extends BaseRequest
             'qty'=>'required|integer|gt:0',
             'unit_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
             'image'=>[
-                'mimes:jpg,jpeg,png',
-                new ImageValidationRule(256,256)
+                'required',
+                new ImageValidationRule(500,500)
             ]
         ];
     }

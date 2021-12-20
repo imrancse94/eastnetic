@@ -1,8 +1,8 @@
+const ADMIN = import ('./../components/Admin.vue');
 const routes = [{
     path: '/',
     name: 'dashboard',
-    component: () =>
-        import ('./../components/Admin.vue'),
+    component: () =>ADMIN,
     meta: {
         isIndex: false,
         requiresAuth: true
@@ -23,8 +23,7 @@ const routes = [{
 {
     path: '/order',
     name: 'order',
-    component: () =>
-        import ('./../components/Admin.vue'),
+    component: () =>ADMIN,
     meta: {
         isIndex: false,
         requiresAuth: true
@@ -53,6 +52,45 @@ const routes = [{
 },
 
 {
+    path: '/product',
+    name: 'product',
+    component: () => ADMIN,
+    meta: {
+        requiresAuth: true
+    },
+    redirect: { name: "product.index" },
+    children: [
+        {
+            path: '',
+            name: 'product.index',
+            component: () =>
+                import ('../components/Content/Product/index.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'add',
+            name: 'product.add',
+            component: () =>
+                import ('../components/Content/Product/add.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'edit/:id',
+            name: 'product.edit',
+            component: () =>
+                import ('../components/Content/Product/edit.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        }
+    ]
+},
+
+{
     path: '/login',
     name: 'Login',
     component: () =>
@@ -68,7 +106,7 @@ const routes = [{
     name: 'HelloWorld',
     component: () =>
         import ('./../components/HelloWorld.vue'),
-    redirect: { path: "/login" }
+    redirect: { name: "Login" }
 },
 {
     path: '*',

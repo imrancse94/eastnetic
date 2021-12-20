@@ -6,7 +6,11 @@ use Illuminate\Contracts\Validation\Rule;
 
 class ImageValidationRule implements Rule
 {
-    private $width,$height;
+    private $width,$height,$custom_message;
+    private $image_type_array = [
+        "image/jpeg",
+        "image/png"
+    ];
     /**
      * Create a new rule instance.
      *
@@ -27,10 +31,23 @@ class ImageValidationRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $image = getimagesize($value);
+        list($type, $value) = explode(';', $value);
+        list(, $value)      = explode(',', $value);
+
+        $image = base64_decode($value);
+        $f = finfo_open();
+        $result = finfo_buffer($f, $image, FILEINFO_MIME_TYPE);
+        
+        if(!in_array($result ,$this->image_type_array)){
+            $this->custom_message = __("Invalid Image");
+            return false;
+        }
+        
+        $image_file_size = getBase64ImageSize($image);
         $result = true;
-        if($image[0] > $this->width || $image[1] > $this->height){
+        if($image_file_size >= 1){
             $result = false;
+            $this->custom_message = "The image size must be less or equal 1MB.";
         }
 
        return $result;
@@ -43,6 +60,6 @@ class ImageValidationRule implements Rule
      */
     public function message()
     {
-        return "The :attribute height and width must be {$this->height}px and {$this->width}px.";
+        return $this->custom_message;
     }
 }

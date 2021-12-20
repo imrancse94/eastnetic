@@ -12,7 +12,7 @@
     "
   >
     <span class="text-xs xs:text-sm text-gray-900">
-      Showing 1 to 4 of 50 Entries
+      Showing {{data.from}} to {{data.to}} of {{data.total}} Entries
     </span>
     <div class="inline-flex mt-2 xs:mt-0">
       <button
@@ -32,7 +32,8 @@
         Prev
       </button>
       <button
-        v-if="data.last_page > 1"
+        v-for="index in data.last_page"
+        :key="index"
         @click.prevent="paginateTo(index)"
         class=" text-sm border-l-2 border-r-2 border-gray-400
           hover:bg-gray-400
@@ -76,7 +77,9 @@ export default {
       },
     },
   },
-
+  mounted(){
+    console.log('this.data',this.data);
+  },
   methods: {
     paginateTo(page) {
       if (this.$router.currentRoute.query.page != page) {

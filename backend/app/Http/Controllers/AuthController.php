@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Services\UserService;
-
+use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
@@ -21,9 +21,9 @@ class AuthController extends Controller
             if (!$token = auth()->attempt($credentials)) {
                 return $this->sendError(__('Login credentials are invalid.'), [], config('constant.LOGIN_FAILED'));
             }
-
+            
             $data['access_token'] = $token;
-            $data['user'] = $credentials;
+            $data['user'] = Auth::user();
             
 
         } catch (\Exception $e) {

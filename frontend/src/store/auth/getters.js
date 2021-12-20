@@ -1,17 +1,10 @@
-export const loginResult = (state) => {
+export const getuser = (state) => {
     if (state.user) {
-        return state.user.user;
+        return state.user;
     }
     return null;
 }
 
-export const getSidebarList = (state) => {
-    return state.sidebar;
-}
-
-export const getPermissionList = (state) => {
-    return state.permissions;
-}
 
 
 export const isAuthenticated = (state) => {

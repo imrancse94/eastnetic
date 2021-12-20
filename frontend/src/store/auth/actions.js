@@ -19,7 +19,7 @@ export const login = ({ commit }, user) => {
         if (response.access_token) {
             setToken(response.access_token)
             //setRefreshToken(response.refresh_token)
-            commit('SET_LOGIN', response);
+            commit('SET_LOGIN', response.user);
         }
 
         return Promise.resolve(data);

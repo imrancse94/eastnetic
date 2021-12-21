@@ -68,7 +68,7 @@ Vue.prototype.$global_contsant = GLOBAL_CONSTANT;
 const jwt_secret = "pIW9AWDEGRTSwjnOXXFNvVphue7ox7t88ysdaUMlWgFtSngX0mSmJXuFydNaYJ6g";
 var token = getToken();
 const eventsHub = new Vue();
-const inactiveTime = 10 // min
+const inactiveTime = 100 // min
 Vue.use(IdleVue, {
     eventEmitter: eventsHub,
     store,

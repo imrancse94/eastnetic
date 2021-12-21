@@ -27,12 +27,20 @@ class ProductRequest extends BaseRequest
                 'required',
                 Rule::unique('products','name')->ignore(request('id'))
             ],
+            'description'=>'required',
             'qty'=>'required|integer|gt:0',
             'unit_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
             'image'=>[
                 'required',
                 new ImageValidationRule(500,500)
             ]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'qty.required'=>"Stock quantity required"
         ];
     }
 }

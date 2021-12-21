@@ -10,7 +10,7 @@ export const getProducts = ({ commit }, params) => {
 
 
 export const productAdd = ({ commit }, params) => {
-    return product.orderAdd(params).then(({ data }) => {
+    return product.productAdd(params).then(({ data }) => {
         const response = data;
         return Promise.resolve(response);
     })

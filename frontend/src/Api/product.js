@@ -8,7 +8,7 @@ export default {
     },
 
     productAdd(params) {
-        return Api.post('moduleAdd', params)
+        return Api.post('product/add', params)
     },
 
     getProductById(params) {

@@ -6,6 +6,9 @@ export const getuser = (state) => {
 }
 
 
+export const getUserType = (state) => {
+    return state.user.user_type;
+}
 
 export const isAuthenticated = (state) => {
     return state.status.loggedIn;

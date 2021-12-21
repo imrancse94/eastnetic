@@ -165,7 +165,7 @@ export default {
       
       this.productAdd(this.product).then(response =>{
         console.log('responsewwww',response)
-        if(response.success && (parseInt(response.statuscode) == this.$global_contsant.PRODUCT_ADD_SUCCESS)){
+        if(response.success && response.statuscode == this.$global_contsant.PRODUCT_ADD_SUCCESS){
              this.errors = {}; 
              this.$router.push({name:"product.index"});
              this.$toastr.s(response.message,"success")

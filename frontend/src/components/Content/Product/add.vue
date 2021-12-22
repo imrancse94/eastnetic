@@ -10,7 +10,7 @@
                   Product Name
                 </label>
                 <input v-model="product.name" :class="errors.name ? 'border-red-500':''" class="appearance-none block w-full bg-white bg-clip-padding text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Name">
-                <p v-if="errors.name" class="text-red-500 text-xs italic">{{errors.name[0]}}</p>
+                <p v-if="errors.name" class="text-red-500 text-xs italic">{{errors.name}}</p>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
@@ -25,7 +25,7 @@
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                   </div>
                 </div>
-                <p v-if="errors.status" class="text-red-500 text-xs italic">{{errors.status[0]}}</p>
+                <p v-if="errors.status" class="text-red-500 text-xs italic">{{errors.status}}</p>
               </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -34,14 +34,14 @@
                   Stock
                 </label>
                 <input v-model="product.qty" :class="errors.qty ? 'border-red-500':''" class="appearance-none block w-full bg-white bg-clip-padding text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Stock">
-                <p v-if="errors.qty" class="text-red-500 text-xs italic">{{errors.qty[0]}}</p>
+                <p v-if="errors.qty" class="text-red-500 text-xs italic">{{errors.qty}}</p>
               </div>
               <div class="w-full md:w-1/2 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                   Unit Price
                 </label>
                 <input v-model="product.unit_price" :class="errors.unit_price ? 'border-red-500':''" class="appearance-none block w-full bg-white bg-clip-padding text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Unit Price">
-                <p v-if="errors.unit_price" class="text-red-500 text-xs italic">{{errors.unit_price[0]}}</p>
+                <p v-if="errors.unit_price" class="text-red-500 text-xs italic">{{errors.unit_price}}</p>
               </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -73,14 +73,14 @@
                   rows="3"
                   placeholder="Description"
                 ></textarea>
-                <p v-if="errors.description" class="text-red-500 text-xs italic">{{errors.description[0]}}</p>
+                <p v-if="errors.description" class="text-red-500 text-xs italic">{{errors.description}}</p>
               </div>
             </div>
         </div>
         <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 sm:p-6 p-3">
           <div class="w-full">
               <div class="rounded-lg overflow-hidden w-66 sm:w-full mx-auto">
-                <img class="object-contain h-64 w-full " :src="product.image">
+                <img class="object-contain h-64 w-full " :src="product.image" />
               </div>
           </div>
           <div class="w-full">
@@ -103,7 +103,7 @@
       ease-in-out
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" @change="fileupload" id="formFile">
-    <p v-if="errors.image" class="text-red-500 text-xs italic">{{errors.image[0]}}</p>
+    <p v-if="errors.image" class="text-red-500 text-xs italic">{{errors.image}}</p>
     </div>
   </div>
           </div>
@@ -128,7 +128,6 @@
 import { mapActions } from "vuex";
 import Helper from "./../../../Helper/moment";
 import {getBase64} from "./../../../Helper";
-import GLOBAL_CONSTANT from "./../../../constant";
 
 export default {
   mixins: [Helper],
@@ -140,7 +139,7 @@ export default {
         name:'',
         unit_price:'',
         qty:'',
-        image:'',
+        image:this.$global_contsant.NO_IMAGE_PATH,
       },
       errors:{}
     };

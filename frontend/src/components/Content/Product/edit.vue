@@ -1,540 +1,197 @@
 <template>
-  <div class="main-content w-full bg-white">
-    <ContentPageHeader header="Order Edit" />
-    <div
-      class="flex flex-row flex-wrap flex-grow w-full md:w-full xl:w-full"
-    >
-    <div class="flex flex-wrap p-2">
-        
-    </div>
-      <div class="flex flex-wrap p-6">
-        <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 p-2">
-        <h3 class="text-center p-3 uppercase text-gray-600 font-bold mb-5 border-b-2">Order Info</h3>
-          <form method="post" action="">
+  <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+    <ContentPageHeader header="Add Product" />
+    <form method="post" @submit.prevent="updateProduct" action="">
+      <div class="flex flex-row flex-wrap flex-grow mt-2 w-full md:w-full xl:w-full">
+        <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 sm:p-6 p-3">
           <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label
-                class="
-                  block
-                  uppercase
-                  tracking-wide
-                  text-gray-700 text-xs
-                  font-bold
-                  mb-2
-                "
-                for="grid-first-name"
-              >
-                Unique ID
-              </label>
-              <input
-              disabled="disbaled"
-              v-model="order.unique_id"
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  bg-gray-200
-                  text-gray-700
-                  border border-red-500
-                  rounded
-                  py-3
-                  px-4
-                  mb-3
-                  leading-tight
-                  focus:outline-none focus:bg-white
-                "
-                id="grid-first-name"
-                type="text"
-                placeholder="Jane"
-              />
-              <p class="text-red-500 text-xs italic">
-                Please fill out this field.
-              </p>
-            </div>
-            <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label
-                class="
-                  block
-                  uppercase
-                  tracking-wide
-                  text-gray-700 text-xs
-                  font-bold
-                  mb-2
-                "
-                for="grid-state"
-              >
-                State
-              </label>
-              <div class="relative">
-                <select
-                  v-model="order.order_status"
-                  class="
-                    block
-                    appearance-none
-                    w-full
-                    bg-gray-200
-                    border border-gray-200
-                    text-gray-700
-                    py-3
-                    px-4
-                    pr-8
-                    rounded
-                    leading-tight
-                    focus:outline-none focus:bg-white focus:border-gray-500
-                  "
-                  id="grid-state"
-                >
-                  <option disabled>Pleae select</option>
-                  <option :value="index" v-for="(o,index) in order_status_list" :key="index" >{{o}}</option>
-
-                </select>
-                <div
-                  class="
-                    pointer-events-none
-                    absolute
-                    inset-y-0
-                    right-0
-                    flex
-                    items-center
-                    px-2
-                    text-gray-700
-                  "
-                >
-                  <svg
-                    class="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                    />
-                  </svg>
+              <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                  Product Name
+                </label>
+                <input v-model="product.name" :class="errors.name ? 'border-red-500':''" class="appearance-none block w-full bg-white bg-clip-padding text-gray-700 border  rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Name">
+                <p v-if="errors.name" class="text-red-500 text-xs italic">{{errors.name}}</p>
+              </div>
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                  Status
+                </label>
+                <div class="relative">
+                  <select v-model="product.status" class="block appearance-none w-full bg-white bg-clip-padding border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  </div>
                 </div>
+                <p v-if="errors.status" class="text-red-500 text-xs italic">{{errors.status}}</p>
               </div>
             </div>
-          </div>
-          <div class="flex flex-wrap -mx-3 mb-6">
-            <div class="w-full md:w-1/3 px-3">
-              <label
-                class="
-                  block
-                  uppercase
-                  tracking-wide
-                  text-gray-700 text-xs
-                  font-bold
-                  mb-2
-                "
-                for="grid-password"
-              >
-                Quantity
-              </label>
-              <input
-                v-model="order.qty"
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  bg-gray-200
-                  text-gray-700
-                  border border-gray-200
-                  rounded
-                  py-3
-                  px-4
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-gray-500
-                "
-                id="grid-last-name"
-                type="text"
-                placeholder="Doe"
-              />
-             
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full md:w-1/2 px-3">
+                <label  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                  Stock
+                </label>
+                <input v-model="product.qty" :class="errors.qty ? 'border-red-500':''" class="appearance-none block w-full bg-white bg-clip-padding text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Stock">
+                <p v-if="errors.qty" class="text-red-500 text-xs italic">{{errors.qty}}</p>
+              </div>
+              <div class="w-full md:w-1/2 px-3">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+                  Unit Price
+                </label>
+                <input v-model="product.unit_price" :class="errors.unit_price ? 'border-red-500':''" class="appearance-none block w-full bg-white bg-clip-padding text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Unit Price">
+                <p v-if="errors.unit_price" class="text-red-500 text-xs italic">{{errors.unit_price}}</p>
+              </div>
             </div>
-            <div class="w-full md:w-1/3 px-3">
-              <label
-                class="
-                  block
-                  uppercase
-                  tracking-wide
-                  text-gray-700 text-xs
-                  font-bold
-                  mb-2
-                "
-                for="grid-password"
-              >
-                Unit Price
-              </label>
-              <input
-                v-model="order.unit_price"
-                disabled="disabled"
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  bg-gray-200
-                  text-gray-700
-                  border border-gray-200
-                  rounded
-                  py-3
-                  px-4
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-gray-500
-                "
-                id="grid-last-name"
-                type="text"
-                placeholder="Doe"
-              />
-             
+            <div class="flex flex-wrap -mx-3 mb-6">
+              <div class="w-full px-3 mb-6 md:mb-0">
+                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                  Description
+                </label>
+                <textarea
+                  v-model="product.description"
+                  :class="errors.description ? 'border-red-500':''"
+                  class="
+                    form-control
+                    block
+                    w-full
+                    px-3
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid 
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+                  "
+                  id="exampleFormControlTextarea13"
+                  rows="3"
+                  placeholder="Description"
+                ></textarea>
+                <p v-if="errors.description" class="text-red-500 text-xs italic">{{errors.description}}</p>
+              </div>
             </div>
-            <div class="w-full md:w-1/3 px-3">
-              <label
-                class="
-                  block
-                  uppercase
-                  tracking-wide
-                  text-gray-700 text-xs
-                  font-bold
-                  mb-2
-                "
-                for="grid-password"
-              >
-                Total Price
-              </label>
-              <input
-                disabled
-                v-model="total_price"
-                class="
-                  appearance-none
-                  block
-                  w-full
-                  bg-gray-200
-                  text-gray-700
-                  border border-gray-200
-                  rounded
-                  py-3
-                  px-4
-                  leading-tight
-                  focus:outline-none focus:bg-white focus:border-gray-500
-                "
-                id="grid-last-name"
-                type="text"
-              />
-             
-            </div>
-          </div>
-          <div class="flex flex-wrap -mx-3 mb-2">
-            <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-              <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">Save</button>
-            </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-              <router-link :to="{name:'order.index'}" class="w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center block"> Back</router-link>
-            </div>
-            
-          </div>
-        </form>
         </div>
-        <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 p-2">
-        <h3 class="text-center uppercase text-gray-600 font-bold p-3 mb-5 border-b-2">Order History</h3>
-           <div
-          class="
-            bg-white
-            border-transparent
-            rounded-lg
-            w-full
-            md:w-full
-            xl:w-full
-          "
-        >
-        <table class="border-collapse w-full">
-          <thead>
-            <tr>
-              <th
-                class="
-                  p-3
-                  font-bold
-                  uppercase
-                  bg-gradient-to-b
-                  from-gray-300
-                  to-gray-100
-                  bg-gray-200
-                  text-gray-600
-                  border border-gray-300
-                  hidden
-                  lg:table-cell
-                "
-              >
-                Order Id
-              </th>
-              <th
-                class="
-                  p-3
-                  font-bold
-                  uppercase
-                  bg-gradient-to-b
-                  from-gray-300
-                  to-gray-100
-                  bg-gray-200
-                  text-gray-600
-                  border border-gray-300
-                  hidden
-                  lg:table-cell
-                "
-              >
-                Order Status
-              </th>
-              <th
-                class="
-                  p-3
-                  font-bold
-                  uppercase
-                  bg-gradient-to-b
-                  from-gray-300
-                  to-gray-100
-                  bg-gray-200
-                  text-gray-600
-                  border border-gray-300
-                  hidden
-                  lg:table-cell
-                "
-              >
-                Quantity
-              </th>
-              <th
-                class="
-                  p-3
-                  font-bold
-                  uppercase
-                  bg-gradient-to-b
-                  from-gray-300
-                  to-gray-100
-                  bg-gray-200
-                  text-gray-600
-                  border border-gray-300
-                  hidden
-                  lg:table-cell
-                "
-              >
-                Unit Price
-              </th>
-              
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-             
-              class="
-                bg-white
-                lg:hover:bg-gray-100
-                flex
-                lg:table-row
-                flex-row
-                lg:flex-row
-                flex-wrap
-                lg:flex-no-wrap
-                mb-10
-                lg:mb-0
-              "
-            >
-              <td
-                class="
-                  w-full
-                  lg:w-auto
-                  p-3
-                  text-gray-800 text-center
-                  border border-b
-                  block
-                  lg:table-cell
-                  relative
-                  lg:static
-                "
-              >
-                <span
-                  class="
-                    lg:hidden
-                    absolute
-                    top-0
-                    left-0
-                    bg-blue-200
-                    px-2
-                    py-1
-                    text-xs
-                    font-bold
-                    uppercase
-                  "
-                  >Order ID</span
-                >
-                 AAAA
-              </td>
-              <td
-                class="
-                  w-full
-                  lg:w-auto
-                  p-3
-                  text-gray-800 text-center
-                  border border-b
-                  text-center
-                  block
-                  lg:table-cell
-                  relative
-                  lg:static
-                "
-              >
-                <span
-                  class="
-                    lg:hidden
-                    absolute
-                    top-0
-                    left-0
-                    bg-blue-200
-                    px-2
-                    py-1
-                    text-xs
-                    font-bold
-                    uppercase
-                  "
-                  >Order Status</span
-                >
-                <span class="rounded bg-green-400 py-1 px-3 text-xs font-bold"
-                  >BBBB</span>
-                 
-              </td>
-              <td
-                class="
-                  w-full
-                  lg:w-auto
-                  p-3
-                  text-gray-800 text-center
-                  border border-b
-                  text-center
-                  block
-                  lg:table-cell
-                  relative
-                  lg:static
-                "
-              >
-                <span
-                  class="
-                    lg:hidden
-                    absolute
-                    top-0
-                    left-0
-                    bg-blue-200
-                    px-2
-                    py-1
-                    text-xs
-                    font-bold
-                    uppercase
-                  "
-                  >Quantity</span
-                >
-                CCC
-              </td>
-              <td
-                class="
-                  w-full
-                  lg:w-auto
-                  p-3
-                  text-gray-800 text-center
-                  border border-b
-                  text-center
-                  block
-                  lg:table-cell
-                  relative
-                  lg:static
-                "
-              >
-                <span
-                  class="
-                    lg:hidden
-                    absolute
-                    top-0
-                    left-0
-                    bg-blue-200
-                    px-2
-                    py-1
-                    text-xs
-                    font-bold
-                    uppercase
-                  "
-                  >Unit Price</span
-                >
-                DDDD
-              </td>
-              
-            </tr>
-          </tbody>
-        </table>
-          
+        <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 sm:p-6 p-3">
+          <div class="w-full">
+              <div class="rounded-lg overflow-hidden w-66 sm:w-full mx-auto">
+                <img class="object-contain h-64 w-full " :src="default_image">
+              </div>
+          </div>
+          <div class="w-full">
+            <div class="flex justify-center">
+    <div class="mt-3">
+      <input 
+      :class="errors.name ? 'border-red-500':'border-gray-300'"
+      class="form-control
+      block
+      w-full
+      px-3
+      py-1.5
+      text-base
+      font-normal
+      text-gray-700
+      bg-white bg-clip-padding
+      border border-solid 
+      rounded
+      transition
+      ease-in-out
+      m-0
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" type="file" @change="fileupload" id="formFile">
+    <p v-if="errors.image" class="text-red-500 text-xs italic">{{errors.image}}</p>
+    </div>
+  </div>
+          </div>
         </div>
+
+        <div class="w-full p-4">
+          <div class="flex flex-wrap -mx-3 mb-2 justify-center">
+              <div class="w-full md:w-1/12 px-3 mb-6 md:mb-0">
+                  <router-link :to="{name:'product.index'}" class="block text-center bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" >Back</router-link>
+              </div>
+              <div class="w-full md:w-1/12 px-3 mb-6 md:mb-0">
+                <button class="block w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Save</button>
+              </div>
+            </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import Helper from "./../../../Helper/moment";
-import GLOBAL_CONSTANT from "./../../../constant";
+import {getBase64} from "./../../../Helper";
+
 
 export default {
   mixins: [Helper],
-  name: "ModuleAdd",
+  name: "ProductEdit",
   data() {
     return {
-      order:{
-        unique_id:null,
-        qty:null,
-        unit_price:null,
-        order_status:null,
+      product: {
+        status:1,
+        name:'',
+        unit_price:'',
+        qty:'',
+        image:'',
       },
-      total_price:0,
-      order_status_list:this.$global_contsant.order_status_list,
-      orderHistoryData:{},
-      errors: {},
+      default_image:this.$global_contsant.NO_IMAGE_PATH,
+      errors:{}
     };
   },
-  mounted(){
+  computed: {
     
-    this.orderData = {};
-    this.orderHistoryData = {};
-    
-    this.getorderById(this.$router.currentRoute.params.id).then((data) => {
-      console.log(data)
-      this.order.unique_id = data.order.unique_order_id
-      this.order.qty = data.order.qty
-      this.order.unit_price = data.order.unit_price
-      this.order.order_status = data.order.order_status
-      this.total_price = data.order.qty*data.order.unit_price
-      if(data.order_history){
-        this.orderHistoryData = data.order_history;
-      }
-      
-      
-    });
   },
-  computed: {},
+  mounted(){
+    //console.log('this.product',this.$global_contsant.PRODUCT_EDIT_SUCCESS)
+    this.getProduct();
+  },
   methods: {
-    ...mapActions("order", ["getorderById"]),
 
-    addModule() {
-      this.moduleAdd(this.module)
-        .then((response) => {
-          if (
-            response.success &&
-            response.statuscode == GLOBAL_CONSTANT["MODULE_INSERT_SUCCESS"]
-          ) {
-            this.errors = {};
-            this.$toast.success({
-              title: "Saved",
-              message: "Module Saved successfully.",
-            });
-            this.$router.push({ name: "module-index" });
-          } else {
-            this.errors = response.data;
-          }
-        })
-        .catch(() => {});
+    ...mapActions("product", ["getProductById","productEdit"]),
+    getProduct(){
+      this.getProductById(this.$router.currentRoute.params.id).then((data) => {
+        this.product = data;
+        if(data.image){
+          this.default_image = this.product.image;
+          this.product.image = '';
+        }
+        
+      })
     },
+    fileupload(e){
+      getBase64(e.target.files[0]).then(data=>{
+        this.product.image = data;
+        this.default_image = data
+      })
+      
+    },
+    updateProduct(){
+       console.log('request12121',this.product)
+      this.productEdit(this.product).then(response =>{
+        console.log('responsewwww',response)
+        if(response.success && response.statuscode == this.$global_contsant.PRODUCT_EDIT_SUCCESS){
+             this.errors = {}; 
+             //this.$router.push({name:"product.index"});
+             this.$toastr.s(response.message,"success")
+             //this.getProduct();
+          }else{
+            
+            this.errors = response.data;
+
+            console.log('this.errors',this.errors)
+
+          }
+      }).catch(() =>{});
+    }
   },
 };
 </script>
+

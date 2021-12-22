@@ -52,3 +52,4 @@ export const getBase64 = (file) => {
       reader.readAsDataURL(file);
     })
   }
+

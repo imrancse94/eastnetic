@@ -31,7 +31,11 @@ import SelectDropdown from './components/Include/InputComponent/SelectDropdown.v
 import InputEmail from './components/Include/InputComponent/InputEmail.vue';
 import VueMultiselectItems from 'vue-multiselect-items'
 
+import ProductShow from './components/Include/ProductShow.vue';
+import Modal from './components/Include/Modal.vue';
 
+Vue.component('Modal', Modal);
+Vue.component('ProductShow', ProductShow);
 Vue.component('pagination', pagination);
 Vue.component('ErrorValidation', ErrorValidation);
 Vue.component('ActionButton', ActionButton);

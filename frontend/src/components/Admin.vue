@@ -9,6 +9,7 @@
         <router-view></router-view>
       </transition>
     </div>
+    <Modal v-if="$store.getters['modal/isModalOpen']" />
   </div>
 </template>
 

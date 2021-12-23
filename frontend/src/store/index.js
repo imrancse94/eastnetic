@@ -11,6 +11,7 @@ import loading from "./loading";
 import test from './test';
 import order from "./order";
 import product from "./product";
+import modal from "./modal";
 
 export default new Vuex.Store({
     modules: {
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         order,
         test,
         loading,
-        product
+        product,
+        modal
     }
 });

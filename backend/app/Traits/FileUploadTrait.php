@@ -38,7 +38,11 @@ trait FileUploadTrait{
         return $result;
     }
 
-    public function getImageByFilePath($file_path){
+    public function getImageByFilePath($file_path,$is_base64 = false){
+
+        if($is_base64){
+            return base64_encode(file_get_contents("storage/".$file_path));
+        }
         if (Storage::disk('public')->exists($file_path)) {
             return asset("storage/".$file_path);
         }

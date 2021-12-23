@@ -22,7 +22,7 @@ class ProductRequest extends BaseRequest
      */
     public function rules()
     {
-        return [
+        $rule = [
             'name'=>[
                 'required',
                 Rule::unique('products','name')->ignore(request('id'))
@@ -30,11 +30,16 @@ class ProductRequest extends BaseRequest
             'description'=>'required',
             'qty'=>'required|integer|gt:0',
             'unit_price'=>'required|regex:/^\d+(\.\d{1,2})?$/',
-            'image'=>[
+        ];
+
+        if(!empty(request('image'))){
+            $rule['image']=[
                 'required',
                 new ImageValidationRule(500,500)
-            ]
-        ];
+            ];
+        }
+        
+        return $rule;
     }
 
     public function messages()

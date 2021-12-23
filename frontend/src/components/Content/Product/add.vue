@@ -87,7 +87,7 @@
             <div class="flex justify-center">
     <div class="mt-3">
       <input 
-      :class="errors.name ? 'border-red-500':'border-gray-300'"
+      :class="errors.image ? 'border-red-500':'border-gray-300'"
       class="form-control
       block
       w-full
@@ -147,16 +147,18 @@ export default {
   computed: {
     
   },
-  mounted(){
-    console.log('this.product',this.$global_contsant.PRODUCT_ADD_SUCCESS)
-  },
+  
   methods: {
 
     ...mapActions("product", ["productAdd"]),
     
     fileupload(e){
       getBase64(e.target.files[0]).then(data=>{
+        this.errors = {image:null};
         this.product.image = data;
+      }).catch(error=>{
+        this.errors = {image:error};
+        this.product.image = this.$global_contsant.NO_IMAGE_PATH;
       })
       
     },

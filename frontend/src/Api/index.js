@@ -28,7 +28,7 @@ Api.interceptors.request.use(function(config) {
     req.pending();
     const token = getToken();
 
-    config.headers.Authorization = 'Bearer ' + token;
+    config.headers['Authorization'] = 'Bearer ' + token;
     config.headers['Content-Type'] = 'application/json';
     config.headers['Accept'] = 'application/json';
     //console.log('resquest.success', config);
@@ -52,8 +52,8 @@ Api.interceptors.response.use(
     error => {
         req.done();
         console.log('resquest.error', error);
-        //store.dispatch('auth/setLogout');
-        //router.push({name:'Login'})
+        store.dispatch('auth/setLogout');
+        router.push({name:'Login'})
         return Promise.reject(error);
         // Reject promise if usual error
 

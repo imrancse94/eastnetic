@@ -22,7 +22,5 @@ export default {
     productDelete(params) {
         return Api.delete('product/delete/' + params)
     },
-    // moduleList(params) {
-    //     return Api.get('moduleList', params);
-    // }
+    
 }

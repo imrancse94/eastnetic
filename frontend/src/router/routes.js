@@ -40,6 +40,15 @@ const routes = [{
             }
         },
         {
+            path: 'add',
+            name: 'order.add',
+            component: () =>
+                import ('../components/Content/Order/add.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
             path: 'edit/:id',
             name: 'order.edit',
             component: () =>

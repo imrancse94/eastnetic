@@ -7,9 +7,9 @@
       <div class="w-full md:w-full xl:w-full p-6">
         <div class="flex flex-wrap">
           <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 pt-2 text-gray-600 mb-5 sm:text-left md:text-left lg:text-left text-center">
-          <button class="w-full sm:w-1/4 md:w-1/4 lg:w-1/4 xl:w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
+          <router-link :to="{name:'order.add'}" class="w-full block sm:w-1/4 md:w-1/4 lg:w-1/4 xl:w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
           Add Order
-        </button>
+        </router-link>
         </div>
           <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 pt-2 relative text-gray-600 mb-5 sm:text-right md:text-right lg:text-right text-center">
             <input

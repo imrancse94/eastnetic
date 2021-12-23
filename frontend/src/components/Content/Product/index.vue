@@ -277,7 +277,7 @@
                   "
                   >Image</span
                 >
-                <img class="object-contain h-20 w-20 inline-block" :src="product.image" alt="">
+                <img class="object-contain h-20 w-20 inline-block" :src="product.image ? product.image:$global_contsant.NO_IMAGE_PATH" alt="">
                  
               </td>
               <td
@@ -285,7 +285,7 @@
                   w-full
                   lg:w-auto
                   p-3
-                  text-gray-800 text-center
+                  text-gray-800
                   border border-b
                   text-center
                   block
@@ -316,7 +316,7 @@
                   w-full
                   lg:w-auto
                   p-3
-                  text-gray-800 text-center
+                  text-gray-800
                   border border-b
                   text-center
                   block
@@ -347,7 +347,7 @@
                   w-full
                   lg:w-auto
                   p-3
-                  text-gray-800 text-center
+                  text-gray-800
                   border border-b
                   text-center
                   block
@@ -371,10 +371,10 @@
                   "
                   >Actions</span
                 >
-                <a href="#" class="text-blue-400 hover:text-blue-600 underline"
-                  >Edit</a
-                >
+                <router-link :to="{name:'product.edit',params: { id: product.id }}" class="text-blue-400 hover:text-blue-600 underline"
+                  >Edit</router-link>
                 <a
+                  @click.prevent="deleteProduct(product.id)"
                   href="#"
                   class="text-blue-400 hover:text-blue-600 underline pl-6"
                   >Remove</a
@@ -409,16 +409,12 @@ export default {
   computed: {},
   mounted() {
     this.productData = [];
-    console.log('route',this.$router.currentRoute)
     this.getProducts(this.$router.currentRoute.query).then((data) => {
       this.productData = data;
-      console.log('this.productData',this.productData)
     });
-
-    //console.log('this.productData',this.productData)
   },
   methods: {
-    ...mapActions("product", ["getProducts"]),
+    ...mapActions("product", ["getProducts","productDelete"]),
 
     getPaginateproducts() {
       this.productData = [];
@@ -427,7 +423,7 @@ export default {
       });
     },
 
-    deleteModule(id) {
+    deleteProduct(id) {
       console.log(id);
       this.$swal({
         title: "Are you sure?",
@@ -439,9 +435,16 @@ export default {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.value) {
-          this.moduleDelete(id).then(() => {
-            this.$swal("Deleted!", "Module has been deleted.", "success");
-            this.moduleMethod();
+          this.productDelete(id).then((data) => {
+            console.log('data',data)
+            var status = 'success';
+            var type = 'Deleted!';
+            if(data.statuscode < 0){
+              status = 'warning';
+               type = 'Failed';
+            }
+            this.$swal(type, data.message, status);
+            this.getPaginateproducts();
           });
         }
       });

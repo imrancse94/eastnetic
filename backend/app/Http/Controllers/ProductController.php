@@ -19,6 +19,7 @@ class ProductController extends Controller
     // add new product
     public function addProduct(ProductRequest $request){
         $inputData = $request->all();
+        
         $message = __("Product added failed.");
         $code = config('constant.PRODUCT_ADD_FAILED');
         $data = [];
@@ -36,6 +37,7 @@ class ProductController extends Controller
     // edit product
     public function editProduct(ProductRequest $request,$id){
         $inputData = $request->all();
+        $inputData = array_filter($inputData);
         $message = __("Product edited failed.");
         $code = config('constant.PRODUCT_EDIT_FAILED');
         $data = [];
@@ -63,6 +65,7 @@ class ProductController extends Controller
     // get all active product list
     public function getProductList(){
         $params = request()->all();
+        
         $data = $this->productService->getAllActiveProducts($params);
         $message = __("Product list get failed.");
         $code = config('constant.PRODUCT_GET_LIST_FAILED');
@@ -77,6 +80,7 @@ class ProductController extends Controller
 
     // delete product by id
     public function deleteProductById($product_id){
+        
         $message = __("Product deleted failed.");
         $code = config('constant.PRODUCT_DELETED_FAILED');
         

@@ -23,3 +23,10 @@
 		transform: rotate(360deg);
 	}
 }
+
+li .active-link{
+	@apply border-b-2 border-blue-500
+}
+.active-link span{
+	@apply text-white
+}

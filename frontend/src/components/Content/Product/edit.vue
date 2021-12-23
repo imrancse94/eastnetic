@@ -87,7 +87,7 @@
             <div class="flex justify-center">
     <div class="mt-3">
       <input 
-      :class="errors.name ? 'border-red-500':'border-gray-300'"
+      :class="errors.image ? 'border-red-500':'border-gray-300'"
       class="form-control
       block
       w-full
@@ -168,10 +168,12 @@ export default {
     },
     fileupload(e){
       getBase64(e.target.files[0]).then(data=>{
+        this.errors = {image:null};
         this.product.image = data;
-        this.default_image = data
+        this.default_image = this.product.image;
+      }).catch(error=>{
+        this.errors = {image:error};
       })
-      
     },
     updateProduct(){
        console.log('request12121',this.product)

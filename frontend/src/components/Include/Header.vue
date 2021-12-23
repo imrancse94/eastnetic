@@ -56,7 +56,7 @@
             ref="profile_section"
             class="drop-button text-white focus:outline-none"
           >
-            <span class="pr-2"><i class="em em-robot_face"></i></span> Hi, User
+            <span class="pr-2"><i class="em em-robot_face"></i></span> {{$store.getters['auth/getuser'].name}}
             <svg
               class="h-3 fill-current inline"
               xmlns="http://www.w3.org/2000/svg"
@@ -88,15 +88,6 @@
           >
             <div class="py-1" role="none">
               <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-              <a
-                href="#"
-                class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-300"
-                role="menuitem"
-                tabindex="-1"
-                id="menu-item-0"
-                >Profile</a
-              >
-              
               <a
                 href="#"
                 @click.prevent="logout"
@@ -139,6 +130,7 @@ export default {
   },
   mounted() {
     document.addEventListener("click", this.close);
+    
   },
   beforeDestroy() {
     document.removeEventListener("click", this.close);

@@ -16,6 +16,7 @@ const routes = [{
                 import ('../components/Content/Dashboard/index.vue'),
             meta: {
                 requiresAuth: true,
+                isAdmin:true
             }
         }
     ]
@@ -25,7 +26,6 @@ const routes = [{
     name: 'order',
     component: () =>ADMIN,
     meta: {
-        isIndex: false,
         requiresAuth: true
     },
     redirect: { name: "order.index" },
@@ -37,6 +37,8 @@ const routes = [{
                 import ('../components/Content/Order/index.vue'),
             meta: {
                 requiresAuth: true,
+                isAdmin:true,
+                isBuyer:true
             }
         },
         {
@@ -46,6 +48,7 @@ const routes = [{
                 import ('../components/Content/Order/add.vue'),
             meta: {
                 requiresAuth: true,
+                isAdmin:false
             }
         },
         {
@@ -55,6 +58,7 @@ const routes = [{
                 import ('../components/Content/Order/edit.vue'),
             meta: {
                 requiresAuth: true,
+                isAdmin:false
             }
         }
     ]
@@ -76,6 +80,7 @@ const routes = [{
                 import ('../components/Content/Product/index.vue'),
             meta: {
                 requiresAuth: true,
+                isAdmin:true
             }
         },
         {
@@ -85,6 +90,7 @@ const routes = [{
                 import ('../components/Content/Product/add.vue'),
             meta: {
                 requiresAuth: true,
+                isAdmin:true
             }
         },
         {
@@ -94,6 +100,7 @@ const routes = [{
                 import ('../components/Content/Product/edit.vue'),
             meta: {
                 requiresAuth: true,
+                isAdmin:true
             }
         }
     ]
@@ -105,8 +112,9 @@ const routes = [{
     component: () =>
         import ('./../components/Login.vue'),
     meta: {
-        isIndex: false,
-        isLoginRoute: true
+        requiresAuth: false,
+        isAdmin:false
+
     },
 },
 

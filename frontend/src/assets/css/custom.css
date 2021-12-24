@@ -30,3 +30,7 @@ li .active-link{
 .active-link span{
 	@apply text-white
 }
+
+.swal2-container.swal2-center>.swal2-popup{
+	@apply text-sm
+}

@@ -6,9 +6,9 @@ export default {
         return Api.get(makeURLQueryString('order/list', params))
     },
 
-    // moduleAdd(params) {
-    //     return Api.post('moduleAdd', params)
-    // },
+    orderAdd(params) {
+        return Api.post('order/add', params)
+    },
 
     getorderById(params) {
         console.log('params',params)

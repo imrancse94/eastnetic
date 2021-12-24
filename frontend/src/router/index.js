@@ -26,8 +26,27 @@ function isNotPermitted() {
 
 function isRoutePermitted(route_name) {
     var result = false;
+    const permissionType = store.getters['auth/getUserType'];
+    var permissionList = [];
+   
+    routes.map((route,index)=>{
+        
+        if(route.children){
+            route.children.map(child=>{
+                if(child.meta.isAdmin && permissionType == 1){
+                    permissionList.push(child.name)
+                }
 
-    const permissionList = store.getters['auth/getPermissionList'];
+                if(child.meta.isBuyer && permissionType == 2){
+                    permissionList.push(child.name)
+                }
+            })
+        }
+    });
+    console.log('router',permissionList)
+    if(permissionType == 1){ // for admin
+        
+    }
     //console.log('permissionList', permissionList)
     if (!permissionList) {
         return true;
@@ -36,7 +55,7 @@ function isRoutePermitted(route_name) {
     if (permissionList.includes(route_name) && l.resolved.matched.length > 0) {
         result = true;
     }
-
+    //result = true;
     return result;
 }
 

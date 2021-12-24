@@ -31,7 +31,7 @@ Api.interceptors.request.use(function(config) {
     config.headers['Authorization'] = 'Bearer ' + token;
     config.headers['Content-Type'] = 'application/json';
     config.headers['Accept'] = 'application/json';
-    //console.log('resquest.success', config);
+    console.log('resquest.success', config);
     //console.log('request loader_status', store.getters['loading/getLoaderStatus']);
 
     return config;

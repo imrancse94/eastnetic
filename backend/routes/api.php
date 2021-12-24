@@ -26,14 +26,18 @@ Route::post('user/signup',[AuthController::class,'userSignup']);
 // auth middleware
 Route::group(['middleware' => ['auth:api']], function() {
 
+     // for product list
+     Route::get('product/list',[ProductController::class,'getProductList']);
+     
     // For product CRUD by admin
     Route::group(['middleware'=>'AdminRole'],function(){
         Route::post('product/add/',[ProductController::class,'addProduct']);
         Route::put('product/edit/{id}',[ProductController::class,'editProduct']);
-        Route::get('product/list',[ProductController::class,'getProductList']);
         Route::get('product/{id}',[ProductController::class,'getProductById']);
         Route::delete('product/delete/{product_id}',[ProductController::class,'deleteProductById']);
     });
+
+   
 
     // For buyer orders 
     Route::group(['middleware'=>'BuyerRole'],function(){

@@ -50,7 +50,7 @@ export default {
         .then((response) => {
           if (response.success) {
             self.$store.dispatch("loading/stopLoading");
-            this.$router.push({name:"dashboard"});
+           this.$router.push({name:this.$global_contsant.USER_TYPE_DEFAULT_ROUTE[this.$store.getters['auth/getUserType']]});
             this.$toastr.s("Successfully loggedin", "Success");
           } else {
             this.has_error = true;

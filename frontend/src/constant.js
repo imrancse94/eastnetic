@@ -2,7 +2,11 @@
 export default {
     
     "NO_IMAGE_PATH":"/img/no-image.jpg",
-
+    
+    "USER_TYPE_DEFAULT_ROUTE":{
+        1:"dashboard",
+        2:"order"
+    },
     "order_status_list":{
         0:"PENDING",
         1:"APPROVED",

@@ -206,7 +206,7 @@
                   w-full
                   lg:w-auto
                   p-3
-                  text-gray-800 text-center
+                  text-gray-800
                   border border-b
                   text-center
                   block
@@ -270,7 +270,7 @@
                   w-full
                   lg:w-auto
                   p-3
-                  text-gray-800 text-center
+                  text-gray-800
                   border border-b
                   text-center
                   block
@@ -301,7 +301,7 @@
                   w-full
                   lg:w-auto
                   p-3
-                  text-gray-800 text-center
+                  text-gray-800
                   border border-b
                   text-center
                   block
@@ -325,9 +325,8 @@
                   "
                   >Actions</span
                 >
-                <a href="#" class="text-blue-400 hover:text-blue-600 underline"
-                  >Edit</a
-                >
+                <router-link :to="{name:'order.edit',params: { id: order.id }}" class="text-blue-400 hover:text-blue-600 underline"
+                  >Edit</router-link>
                 <a
                   href="#"
                   class="text-blue-400 hover:text-blue-600 underline pl-6"
@@ -337,12 +336,11 @@
             </tr>
           </tbody>
         </table>
-          <pagination :data="orderData" @paginateTo="getOrders"/>
+          <pagination :data="orderData" @paginateTo="getOrderData"/>
         </div>
-
-        <!--/table Card-->
       </div>
     </div>
+    <OrderEditModal v-if="$store.getters['modal/isModalOpen']" />
   </div>
 </template>
 
@@ -362,17 +360,15 @@ export default {
   },
   computed: {},
   mounted() {
-    this.orderData = [];
-    this.getOrders(this.$router.currentRoute.query).then((data) => {
-      this.orderData = data;
-    });
-
-    //console.log('this.orderData',this.orderData)
+    this.getOrderData();
   },
   methods: {
     ...mapActions("order", ["getOrders"]),
 
-    moduleMethod() {
+    editModalOpen(order){
+      this.$store.dispatch('modal/openModal',order);
+    },
+    getOrderData() {
       this.orderData = [];
       this.getOrders(this.$router.currentRoute.query).then((data) => {
         this.orderData = data;

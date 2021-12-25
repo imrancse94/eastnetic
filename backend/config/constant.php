@@ -1,11 +1,15 @@
 <?php
 
+//  define('ADMIN_USER_TYPE_ID',1);
+//  define('BUYER_USER_TYPE_ID',2);
+$admin_user_type = 1;
+$buyer_user_type = 2;
 return [
     
     'PERMISSION_ERROR'=>"P401",
 
-    'ADMIN_USER_TYPE'=>1,
-    'BUYER_USER_TYPE'=>2,
+    'ADMIN_USER_TYPE'=>$admin_user_type,
+    'BUYER_USER_TYPE'=>$buyer_user_type,
 
     'DEFAULT_PAGINATE_LIMIT'=>10,
     'ADMIN_EMAIL'=>'imrancse94@gmail.com',
@@ -61,4 +65,33 @@ return [
     'USER_LOGOUT_FAILED'=>-111,
 
     'AUTH_USER_SUCCESS'=>112,
+
+    // always first route will be default route
+    "PERMISSIONS"=>[
+        "$admin_user_type" =>[
+                'dashboard.index', 
+                'product.index',
+                'product.add',
+                'product.edit',
+                'product.delete',
+                'order.index',
+                'order.add',
+                'order.edit',
+                'order.delete',
+            ],
+        "$buyer_user_type" =>[
+            'order.index',
+            'order.add',
+            'order.edit',
+            'order.delete',
+        ]
+
+],
+
+    "BUYER_PERMISSION_ROUTE"=>[
+        'order.index',
+        'order.add',
+        'order.edit',
+        'order.delete',
+    ],
 ];

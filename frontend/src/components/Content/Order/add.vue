@@ -7,6 +7,7 @@
       </div>
     </div>
     <pagination :data="product" @paginateTo="getPaginateProduct"/>
+    <Modal v-if="$store.getters['modal/isModalOpen']" />
   </div>
 
 </template>

@@ -18,38 +18,17 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 
 import pagination from './components/pagination';
-import ActionButton from './components/Include/Buttons/ActionButton';
-import ErrorValidation from './components/Include/ErrorValidation';
-import Button from './components/Include/Buttons/Button';
-import SubmitButton from './components/Include/Buttons/SubmitButton';
-import LinkButton from './components/Include/Buttons/LinkButton';
-import IconButton from './components/Include/Buttons/IconButton';
 import ContentPageHeader from './components/Include/ContentPageHeader';
-import InputText from './components/Include/InputComponent/InputText.vue';
-import InputPassword from './components/Include/InputComponent/InputPassword.vue';
-import SelectDropdown from './components/Include/InputComponent/SelectDropdown.vue';
-import InputEmail from './components/Include/InputComponent/InputEmail.vue';
-import VueMultiselectItems from 'vue-multiselect-items'
-
 import ProductShow from './components/Include/ProductShow.vue';
 import Modal from './components/Include/Modal.vue';
+import OrderEditModal from './components/Include/OrderEditModal';
 
+Vue.component('OrderEditModal', OrderEditModal);
 Vue.component('Modal', Modal);
 Vue.component('ProductShow', ProductShow);
 Vue.component('pagination', pagination);
-Vue.component('ErrorValidation', ErrorValidation);
-Vue.component('ActionButton', ActionButton);
-Vue.component('Button', Button);
-Vue.component('SubmitButton', SubmitButton);
-Vue.component('LinkButton', LinkButton);
-Vue.component('IconButton', IconButton);
 Vue.component('ContentPageHeader', ContentPageHeader);
-// global registration
-Vue.component('InputText',InputText);
-Vue.component('InputPassword',InputPassword);
-Vue.component('SelectDropdown',SelectDropdown);
-Vue.component('InputEmail',InputEmail);
-Vue.component('MultiselectComponent',VueMultiselectItems);
+
 
 
 import GLOBAL_CONSTANT from './constant';
@@ -105,8 +84,7 @@ if (token) {
 }
 if (token) {
     store.dispatch("auth/authUser")
-        .then((response) => {
-            console.log('response',response)
+        .then(() => {
             main();
         })
 } else {

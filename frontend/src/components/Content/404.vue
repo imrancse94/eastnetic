@@ -1,34 +1,23 @@
 <template>
-  <div class="content-wrapper">
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>404 Error Page</h1>
+  <div class="bg-gradient-to-r from-purple-300 to-blue-200">
+      <div class="w-9/12 m-auto py-16 min-h-screen flex items-center justify-center">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg pb-8">
+          <div class="border-t border-gray-200 text-center pt-8">
+            <h1 class="text-9xl font-bold text-purple-400">404</h1>
+            <h1 class="text-6xl font-medium py-8">oops! Page not found</h1>
+            <p class="text-2xl pb-8 px-12 font-medium">Oops! The page you are looking for does not exist. It might have been moved or deleted.</p>
+            <router-link :to="{name:$store.getters['auth/getDefaultRoute']}" class="bg-gradient-to-r from-purple-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 text-white font-semibold px-6 py-3 rounded-md mr-6">
+            BACK TO HOME
+            </router-link>
+           
           </div>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
-    <section class="content">
-      <div class="error-page">
-        <h2 class="headline text-warning"> 404</h2>
-
-        <div class="error-content">
-          <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
-          <p>
-            We could not find the page you were looking for.
-          </p>
-        </div>
-        <!-- /.error-content -->
       </div>
-      <!-- /.error-page -->
-    </section>
-  </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "dashboard",
+  name: "page404",
 };
 </script>

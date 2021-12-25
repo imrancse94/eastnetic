@@ -16,7 +16,7 @@ const routes = [{
                 import ('../components/Content/Dashboard/index.vue'),
             meta: {
                 requiresAuth: true,
-                isAdmin:true
+                
             }
         }
     ]
@@ -36,9 +36,7 @@ const routes = [{
             component: () =>
                 import ('../components/Content/Order/index.vue'),
             meta: {
-                requiresAuth: true,
-                isAdmin:true,
-                isBuyer:true
+                requiresAuth: true
             }
         },
         {
@@ -47,8 +45,7 @@ const routes = [{
             component: () =>
                 import ('../components/Content/Order/add.vue'),
             meta: {
-                requiresAuth: true,
-                isAdmin:false
+                requiresAuth: true
             }
         },
         {
@@ -57,8 +54,7 @@ const routes = [{
             component: () =>
                 import ('../components/Content/Order/edit.vue'),
             meta: {
-                requiresAuth: true,
-                isAdmin:false
+                requiresAuth: true
             }
         }
     ]
@@ -79,8 +75,7 @@ const routes = [{
             component: () =>
                 import ('../components/Content/Product/index.vue'),
             meta: {
-                requiresAuth: true,
-                isAdmin:true
+                requiresAuth: true
             }
         },
         {
@@ -89,8 +84,7 @@ const routes = [{
             component: () =>
                 import ('../components/Content/Product/add.vue'),
             meta: {
-                requiresAuth: true,
-                isAdmin:true
+                requiresAuth: true
             }
         },
         {
@@ -100,7 +94,6 @@ const routes = [{
                 import ('../components/Content/Product/edit.vue'),
             meta: {
                 requiresAuth: true,
-                isAdmin:true
             }
         }
     ]
@@ -113,17 +106,8 @@ const routes = [{
         import ('./../components/Login.vue'),
     meta: {
         requiresAuth: false,
-        isAdmin:false
-
+        isLoginRoute:true
     },
-},
-
-{
-    path: '/',
-    name: 'HelloWorld',
-    component: () =>
-        import ('./../components/HelloWorld.vue'),
-    redirect: { name: "Login" }
 },
 {
     path: '*',

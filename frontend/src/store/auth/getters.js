@@ -4,7 +4,14 @@ export const getuser = (state) => {
     }
     return null;
 }
+//default_route
+export const getDefaultRoute = (state) =>{
+    return state.default_route;
+}
 
+export const getPermissions = (state) =>{
+    return state.permissions;
+}
 
 export const getUserType = (state) => {
     return state.user.user_type;

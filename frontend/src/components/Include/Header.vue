@@ -50,7 +50,7 @@
           md:w-1/3 md:justify-end
         "
       >
-        <div class="relative inline-block pr-2 w-full text-right">
+        <div class="relative inline-block p-2 w-full text-right">
           <button
             @click.prevent="toggleDD"
             ref="profile_section"

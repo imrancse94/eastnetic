@@ -26,41 +26,23 @@ function isNotPermitted() {
 
 function isRoutePermitted(route_name) {
     var result = false;
-    const permissionType = store.getters['auth/getUserType'];
-    var permissionList = [];
-   
-    routes.map((route,index)=>{
-        
-        if(route.children){
-            route.children.map(child=>{
-                if(child.meta.isAdmin && permissionType == 1){
-                    permissionList.push(child.name)
-                }
-
-                if(child.meta.isBuyer && permissionType == 2){
-                    permissionList.push(child.name)
-                }
-            })
-        }
-    });
-    console.log('router',permissionList)
-    if(permissionType == 1){ // for admin
-        
-    }
-    //console.log('permissionList', permissionList)
-    if (!permissionList) {
+    const permissionList = store.getters['auth/getPermissions'];
+    
+    if (permissionList.length == 0) {
         return true;
+    }else{
+        let l = router.resolve({ name: route_name });
+        if (permissionList.length > 0 && permissionList.includes(route_name) && l.resolved.matched.length > 0) {
+            result = true;
+        }
     }
-    let l = router.resolve({ name: route_name });
-    if (permissionList.includes(route_name) && l.resolved.matched.length > 0) {
-        result = true;
-    }
-    //result = true;
+   
+
     return result;
 }
 
 router.beforeEach((to, from, next) => {
-    console.log('to', to)
+    
     if (to.matched.some(record => record.meta.requiresAuth)) {
         var isPermitted = isRoutePermitted(to.name);
         // this route requires auth, check if logged in
@@ -80,7 +62,7 @@ router.beforeEach((to, from, next) => {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
         if (isLoggedIn()) {
-            next({ name: 'dashboard.index' })
+            next({ name: store.getters['auth/getDefaultRoute'] })
         } else {
             next()
         }

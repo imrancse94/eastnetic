@@ -33,7 +33,7 @@ Api.interceptors.request.use(function(config) {
     config.headers['Accept'] = 'application/json';
     console.log('resquest.success', config);
     //console.log('request loader_status', store.getters['loading/getLoaderStatus']);
-
+    
     return config;
 
 }, function(error) {
@@ -46,6 +46,10 @@ Api.interceptors.response.use(
     response => {
         req.done();
         console.log('response.success', response);
+        if(response.data.statuscode == "4001"){
+            store.dispatch('auth/setLogout');
+            router.push({name:'Login'})
+        }
         //console.log('response loader_status', store.getters['loading/getLoaderStatus']);
         return response;
     },

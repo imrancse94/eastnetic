@@ -24,10 +24,11 @@ class AuthController extends Controller
             
             $data['access_token'] = $token;
             $data['user'] = Auth::user();
-            
+            $data['permission'] = config('constant.PERMISSIONS.'.$data['user']->user_type);
+            $data['default_route'] = current($data['permission']);
 
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            //dd($e->getMessage());
             return $this->sendError(__('Could not create token.'), [], config('constant.LOGIN_FAILED'));
         }
 
@@ -65,8 +66,10 @@ class AuthController extends Controller
 
     public function getAuthUser(){
         $message = "Successfully get data.";
-        $data = auth()->user();
+        $data['user'] = auth()->user();
         $data['access_token'] = request()->bearerToken();
+        $data['permission'] = config('constant.PERMISSIONS.'.$data['user']->user_type);
+        $data['default_route'] = current($data['permission']);
         return $this->sendResponse($data,$message,config('constant.AUTH_USER_SUCCESS'));
     }
 

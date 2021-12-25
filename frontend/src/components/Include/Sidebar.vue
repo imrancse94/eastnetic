@@ -23,6 +23,7 @@
       "
     >
       <ul
+        v-if="permissionList.length > 0"
         class="
           list-reset
           flex flex-row
@@ -35,7 +36,7 @@
           md:text-left
         "
       >
-        <li class="mr-3 flex-1">
+        <li v-if="permissionList && permissionList.includes('dashboard.index')" class="mr-3 flex-1">
           <router-link
             :to="{name:'dashboard.index'}"
             class="
@@ -68,7 +69,7 @@
             >
           </router-link>
         </li>
-        <li class="mr-3 flex-1">
+        <li v-if="permissionList && permissionList.includes('product.index')" class="mr-3 flex-1">
           <router-link
             :to="{name:'product.index'}"
             class="
@@ -99,7 +100,7 @@
             >
           </router-link>
         </li>
-        <li class="mr-3 flex-1">
+        <li v-if="permissionList && permissionList.includes('order.index')" class="mr-3 flex-1">
           <router-link
             :to="{name:'order.index'}"
             class="
@@ -141,7 +142,7 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      
+      permissionList:{}
     }
   },
   computed: {
@@ -153,7 +154,7 @@ export default {
    
   },
   mounted() {
-     console.log('11111',this.$router);
+     this.permissionList = this.$store.getters['auth/getPermissions'];
   },
 };
 </script>

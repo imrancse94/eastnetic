@@ -1,16 +1,13 @@
 <template>
-  <div class="main-content w-full bg-white">
+  <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
     <ContentPageHeader header="Order Edit" />
     <div
       class="flex flex-row flex-wrap flex-grow w-full md:w-full xl:w-full"
     >
-    <div class="flex flex-wrap p-2">
-        
-    </div>
-      <div class="flex flex-wrap p-6">
-        <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 p-2">
+    <form method="post" action="">
+      <div class="flex flex-wrap p-6 pt-0">
+        <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 p-2 divide-x">
         <h3 class="text-center p-3 uppercase text-gray-600 font-bold mb-5 border-b-2">Order Info</h3>
-          <form method="post" action="">
           <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
@@ -221,19 +218,9 @@
              
             </div>
           </div>
-          <div class="flex flex-wrap -mx-3 mb-2">
-            <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-              <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">Save</button>
-            </div>
-            <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-              <router-link :to="{name:'order.index'}" class="w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center block"> Back</router-link>
-            </div>
-            
-          </div>
-        </form>
         </div>
         <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 p-2">
-        <h3 class="text-center uppercase text-gray-600 font-bold p-3 mb-5 border-b-2">Order History</h3>
+        <h3 class="text-center uppercase text-gray-600 font-bold p-3 mb-5 border-b-2">Order Edit History</h3>
            <div
           class="
             bg-white
@@ -466,7 +453,18 @@
           
         </div>
         </div>
+        <div class="w-full p-2">
+            <div class="flex flex-wrap -mx-3 mb-2 justify-center">
+            <div class="w-full md:w-1/12 px-3 mb-6 md:mb-0">
+              <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">Save</button>
+            </div>
+            <div class="w-full md:w-1/12 px-3 mb-6 md:mb-0">
+              <router-link :to="{name:'order.index'}" class="w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center block"> Back</router-link>
+            </div>
+          </div>
+          </div>
       </div>
+    </form>  
     </div>
   </div>
 </template>

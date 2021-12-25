@@ -3,9 +3,11 @@ export default {
     status: {
         loggedIn: false
     },
-    user: null,
-    permissions: null,
-    sidebar: null,
-    inValidRoute: false,
-    isNotPermitted: false
+    user: {
+        user_type:0,
+        email:'',
+        name:'',
+    },
+    permissions: {},
+    default_route:'Login'
 }

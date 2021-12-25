@@ -20,8 +20,7 @@ export const orderAdd = ({ commit }, params) => {
 
 export const getorderById = ({ commit }, params) => {
     return order.getorderById(params).then(({ data }) => {
-        const response = data.data;
-        return Promise.resolve(response);
+        return Promise.resolve(data);
     })
 }
 
@@ -29,7 +28,6 @@ export const getorderById = ({ commit }, params) => {
 export const orderEdit = ({ commit }, params) => {
     return order.orderEdit(params).then(({ data }) => {
         const response = data;
-        commit('order_EDIT_BY_ID', response);
         return Promise.resolve(response);
     })
 }

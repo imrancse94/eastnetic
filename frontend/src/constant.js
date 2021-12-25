@@ -17,6 +17,11 @@ export default {
         6:"CANCEL",
     },
 
+    "ignore_edit_list":[
+        6,2,1
+    ],
+        
+    
     "ADMIN_USERT_TYPE":1,
     "BUYER_USERT_TYPE":2,
 

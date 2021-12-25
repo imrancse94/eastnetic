@@ -15,11 +15,9 @@ export default {
         return Api.get('order/' + params)
     },
 
-    // moduleEdit(params) {
-
-    //     return Api.put('module/edit/' + params.id, params)
-
-    // },
+    orderEdit(params) {
+        return Api.put('order/edit/' + params.id, params)
+    },
 
     // moduleDelete(params) {
     //     return Api.delete('module/delete/' + params)

@@ -14,13 +14,9 @@
 
 <script>
 import { mapActions } from "vuex";
-import Helper from "./../../../Helper/moment";
-import GLOBAL_CONSTANT from "./../../../constant";
-import Modal from '../../Include/Modal.vue';
 
 export default {
   components: { Modal },
-  mixins: [Helper],
   name: "OrderAdd",
   data() {
     return {
@@ -29,7 +25,7 @@ export default {
     };
   },
   mounted() {
-   this. getPaginateProduct();
+   this.getPaginateProduct();
   },
   methods: {
 
@@ -40,11 +36,6 @@ export default {
          this.product = data;
         console.log('getProducts',data)
       })
-    },
-
-    modal(product){
-      this.isModalShow = true;
-      
     }
   },
 };

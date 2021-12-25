@@ -11,4 +11,11 @@ class Order extends Model
 
     public $guarded = [];
     
+    /**
+     * Get the product for the order post.
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

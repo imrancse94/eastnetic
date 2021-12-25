@@ -239,7 +239,7 @@
                   w-full
                   lg:w-auto
                   p-3
-                  text-gray-800 text-center
+                  text-gray-800
                   border border-b
                   text-center
                   block

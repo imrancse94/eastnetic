@@ -22,19 +22,20 @@ class OrderEditRequest extends BaseRequest
      */
     public function rules()
     {
-        return [
-            'order_status'=>[
-                'required',
-                'integer',
-                Rule::in($this->order_status_types()),       
-            ],
 
-            'qty'=>[
-                'required',
-                'integer',
-                'gt:0'
-            ]
+        $rule['qty'] = [
+            'required',
+            'integer',
+            'gt:0'
         ];
+
+
+        $rule['order_status'] = [
+            'integer',
+            Rule::in($this->order_status_types()),       
+        ];
+         
+        return $rule;
     }
 
     private function order_status_types(){
@@ -48,7 +49,7 @@ class OrderEditRequest extends BaseRequest
             $status_array[] = config('constant.ORDER_SHIPPED');
             $status_array[] = config('constant.ORDER_DELIVERED');
         }else{
-            //$status_array[] = config('constant.ORDER_PENDING');
+            $status_array[] = config('constant.ORDER_PENDING');
             $status_array[] = config('constant.ORDER_CANCELED');
         }
         

@@ -125,15 +125,22 @@ class OrderService extends Service{
             $clause['user_id'] = $user_id;
         }
 
-        $data['order'] = Order::where($clause)->first();
+        $data['order'] = Order::with('product')->where($clause)->first();
         //$data['order']->order_status = self::order_status_array()[$data['order']->order_status];
-        $data['order_history'] = OrderHistory::where(['order_id'=>$data['order']->id])->get();
-        
-        if(!empty($data['order_history'])){
-            foreach($data['order_history'] as $oh){
+        $order_history = OrderHistory::where(['order_id'=>$data['order']->id])->get();
+        $order_history_data = [];
+        if(!empty($order_history)){
+            foreach($order_history as $oh){
                 $oh->data = json_decode($oh->data,true);
+                $order_history_data[] = [
+                    'created_at'=>$oh->created_at,
+                    'order_status'=>self::order_status_array()[$oh->data['order_status']],
+                    'qty'=>$oh->data['qty']
+                ];
+                // dd($oh->data);
             }
         }
+        $data['order_history'] = $order_history_data;
         return $data;
     }
 

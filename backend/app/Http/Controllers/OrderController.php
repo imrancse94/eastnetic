@@ -19,8 +19,7 @@ class OrderController extends Controller
     // add new order
     public function addOrder(OrderRequest $request){
         
-        $inputData = $request->only('product_id','qty');
-        
+        $inputData = $request->all();
         $message = __("Order added failed.");
         $code = config('constant.ORDER_ADDED_FAILED');
         try{
@@ -69,8 +68,7 @@ class OrderController extends Controller
 
     // edit order by id
     public function editOrder($order_id,OrderEditRequest $request){
-
-        $inputData = $request->only('order_status','qty');
+        $inputData = $request->all();
         $user = auth()->user();
         $user_id = $user->id;
         $user_type = $user->user_type;

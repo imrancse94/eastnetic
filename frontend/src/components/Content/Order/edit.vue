@@ -62,8 +62,8 @@
               </label>
               <div class="relative">
                 <select
-                  disabled
                   v-model="order.order_status"
+                  @change="resetOrderQty"
                   class="
                     block
                     appearance-none
@@ -80,7 +80,6 @@
                   "
                   id="grid-state"
                 >
-                  <option disabled>Pleae select</option>
                   <option :value="index" v-for="(o,index) in order_status_list" :key="index" >{{o}}</option>
 
                 </select>
@@ -200,7 +199,9 @@
               </label>
               <input
                 v-model="order.qty"
-                :class="errors.qty ? 'border-red-500':''"
+                :disabled="status_disabled"
+                :class="errors.qty ? 'border-red-500':'' || status_disabled ? 'bg-gray-200':''"
+                
                 class="
                   appearance-none
                   block
@@ -515,10 +516,10 @@
             <!-- <div v-if="!$global_contsant.ignore_edit_list.some(v=>order.order_status)" class="w-full md:w-1/6 px-3 mb-6 md:mb-0">
               <button type="button" class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Order Cancel</button>
             </div> -->
-            <div class="w-full md:w-1/12 px-3 mb-6 md:mb-0">
+            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0">
               <router-link :to="{name:'order.index'}" class="w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center block"> Back</router-link>
             </div>
-            <div v-if="!$global_contsant.ignore_edit_list.some(v=>order.order_status)" class="w-full md:w-1/12 px-3 mb-6 md:mb-0">
+            <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0">
               <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">Save</button>
             </div>
           </div>
@@ -543,14 +544,21 @@ export default {
         unit_price:null,
         order_status:null,
       },
+      status_disabled:false,
+      on_load_order_status:null,
+      db_qty:0,
       product:{},
       total_price:0,
-      order_status_list:this.$global_contsant.order_status_list,
+      order_status_list:{},
       orderHistoryData:{},
       errors: {qty:""},
       request:{}
     };
   },
+  watch:{
+    
+  },
+
   computed:{
     
     getTotalPrice:function(){
@@ -564,10 +572,13 @@ export default {
       }
       this.total_price = this.order.qty * this.order.unit_price;
       return this.total_price;
-    }
+    },
+    
   },
   mounted(){
     this.getOrderEditData();
+    this.order_status_list = this.$store.getters['auth/getOrderStatusList'];
+    //console.log('ddddd',this.order_status_list)
   },
   
   methods: {
@@ -583,6 +594,8 @@ export default {
           this.order.qty = data.order.qty
           this.order.unit_price = data.order.unit_price
           this.order.order_status = data.order.order_status
+          this.on_load_order_status = data.order.order_status
+          this.db_qty = data.order.qty
           this.total_price = data.order.qty*data.order.unit_price
           this.product = data.order.product;
           if(data.order_history){
@@ -612,6 +625,15 @@ export default {
           }
         });
       }
+    },
+    resetOrderQty(){
+      this.status_disabled = false;
+      if(this.order.order_status == 6){
+        this.order.qty = this.db_qty;
+        this.status_disabled = true;
+      }
+      
+      return this.order.qty;
     }
   },
 };

@@ -4,30 +4,42 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Traits\FileUploadTrait;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 class ProductService extends Service{
     
-    use FileUploadTrait,DatabaseTransactions;
+    use FileUploadTrait;
 
     // new product add
     public function productAdd($inputData){
         $product = null;
+        \DB::beginTransaction();
         try{
             if(!empty($inputData['image'])){
                 $inputData['image'] = $this->uploadFile("product",$inputData['image']);
             }
 
             $product = Product::create($inputData);
+            if(!empty($product['image'])){
+                $product['image'] = $this->getImageByFilePath($product['image']);
+            }
+
+            \DB::commit();
+
+            $this->response_data = $product;
+            $this->status_message = __("Product added successfully.");
+            
         }catch(\Exception $ex){
            // dd($ex->getMessage());
+            \DB::rollBack();
+            $this->status_message = __("Product added failed.");
+            $this->status_code = config('constant.PRODUCT_ADD_FAILED');
         }
         return $product;
     }
 
     // product edit by id
     public function productEdit($id,$inputData){
-        $data = null;
-        $this->status_message = __("Product edited successfully.");
+
+        \DB::beginTransaction();
         try{
             $product = Product::where('id',$id)->first();
             if(isset($inputData['image']) && !empty($inputData['image'])){
@@ -37,10 +49,14 @@ class ProductService extends Service{
                 if(!empty($inputData['image'])){
                     $inputData['image'] = $this->getImageByFilePath($inputData['image']);
                 }
+
+                \DB::commit();
                 $this->response_data = $inputData;
+                $this->status_message = __("Product edited successfully.");
             }
             
         }catch(\Exception $ex){
+            \DB::rollBack();
             $this->status_message = __("Product edited failed.");
             $this->status_code = config('constant.PRODUCT_EDIT_FAILED');
         }
@@ -51,10 +67,13 @@ class ProductService extends Service{
     // product delete by id
     public function productDeleteById($id){
         $data = false;
-        $this->status_message = __("Product deleted successfully.");
+        $this->status_message = __("Product not found.");
         try{
-            $data = Product::where('id',$id)->delete();
+            if($data = Product::where('id',$id)->delete()){
+                $this->status_message = __("Product deleted successfully.");
+            }
         }catch(\Exception $ex){
+            dd($ex->getMessage());
             $this->status_code = config('constant.PRODUCT_DELETED_FAILED');
             if($ex->getCode() == 23000){
                 $this->status_message = "The product is already in another use";

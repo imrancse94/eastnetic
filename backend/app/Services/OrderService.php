@@ -61,15 +61,15 @@ class OrderService extends Service{
             $productservice = new ProductService;
 
             // get order by id
-            $order = Order::where('id',$order_id)
-                            ->where('user_id',$user_id);
+            $order = Order::where('id',$order_id);
             
-            if($user_type != config('constant.ADMIN_USER_TYPE')){
-                $order = $order->whereNotIn('order_status',[
-                    config('constant.ORDER_APPROVED'),
-                    config('constant.ORDER_REJECTED')
-                ]);
-            }                
+            if($user_type == config('constant.BUYER_USER_TYPE')){
+                $order = $order->where('user_id',$user_id)
+                                ->whereNotIn('order_status',[
+                                    config('constant.ORDER_APPROVED'),
+                                    config('constant.ORDER_REJECTED')
+                                ]);
+            }             
                            
             $order = $order->first();
 
@@ -81,7 +81,14 @@ class OrderService extends Service{
             $product = $productservice->getProductById($order->product_id);
             
             // order validation validation
-            $requested_qty = $inputData['qty'] - $order->qty;
+            
+            if($user_type == config('constant.BUYER_USER_TYPE')){
+                $requested_qty = $inputData['qty'] - $order->qty;
+            }else{
+                $requested_qty = $order->qty;
+                $inputData['qty'] = $requested_qty;
+            }
+
             $result['data'] = $this->productValidation($product,$order->product_id,$requested_qty);
 
             if(empty($result['data'])){
@@ -90,7 +97,7 @@ class OrderService extends Service{
                 $updateData['order_status'] = $inputData['order_status'];
                 
                 if($order->update($updateData)){
-                    if($updateData['order_status'] ==  config('constant.ORDER_DELIVERED')){
+                    if(($user_type == config('constant.ADMIN_USER_TYPE')) && ($updateData['order_status'] ==  config('constant.ORDER_APPROVED'))){
                         $product->qty = $product->qty - ($requested_qty);
                         $product->save();
                     }
@@ -109,7 +116,7 @@ class OrderService extends Service{
             }
 
         }catch(\Exception $ex){
-           // dd($ex->getMessage());
+            dd($ex->getMessage(),$ex->getLine());
         }   
         return $result;
     }

@@ -33,17 +33,31 @@ class BaseRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator): ValidationException
+    protected function passedValidation()
+    {
+        $request = $this->all();
+        $rules = array_keys($this->rules());
+        $final_data = [];
+        if (!empty($rules)) {
+            foreach ($rules as $rule) {
+                if (isset($request[$rule])) {
+                    $final_data[$rule] = $request[$rule];
+                }
+            }
+        }
+
+        $this->replace($final_data);
+    }
+
+    protected function failedValidation(Validator $validator): void
     {
         $errors = (new ValidationException($validator))->errors();
         $errorData = [];
-        if(!empty($errors)){
-            foreach($errors as $key => $err){
+        if (!empty($errors)) {
+            foreach ($errors as $key => $err) {
                 $errorData[$key] = current($err);
             }
         }
-        throw new HttpResponseException($this->sendError("validation error", $errorData,config('constant.VALIDATION_ERROR')));
+        throw new HttpResponseException($this->sendError("validation error", $errorData, config('constant.VALIDATION_ERROR')));
     }
-
-    
 }

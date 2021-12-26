@@ -9,6 +9,10 @@ export const getDefaultRoute = (state) =>{
     return state.default_route;
 }
 
+export const getOrderStatusList = (state) =>{
+    return state.order_status_list;
+}
+
 export const getPermissions = (state) =>{
     return state.permissions;
 }

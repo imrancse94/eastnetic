@@ -20,18 +20,13 @@ class ProductController extends Controller
     public function addProduct(ProductRequest $request){
         $inputData = $request->all();
         
-        $message = __("Product added failed.");
-        $code = config('constant.PRODUCT_ADD_FAILED');
-        $data = [];
-        if($data = $this->productService->productAdd($inputData)){
-            if(!empty($data['image'])){
-                $data['image'] = $this->getImageByFilePath($data['image']);
-            }
-            $message = __("Product added successfully.");
-            $code = config('constant.PRODUCT_ADD_SUCCESS');
-        }
+        $this->productService->productAdd($inputData);
 
-        return $this->sendResponse($data,$message,$code);
+        return $this->sendResponse(
+            $this->productService->response_data,
+            $this->productService->status_message,
+            $this->productService->status_code
+        );
     }
 
     // edit product
@@ -73,7 +68,12 @@ class ProductController extends Controller
     public function deleteProductById($product_id){
 
         $this->productService->productDeleteById($product_id);
-        return $this->sendResponse([],$this->productService->status_message,$this->productService->status_code);
+
+        return $this->sendResponse(
+            $this->productService->response_data,
+            $this->productService->status_message,
+            $this->productService->status_code
+        );
     }
 
 

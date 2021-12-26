@@ -4,6 +4,15 @@
 //  define('BUYER_USER_TYPE_ID',2);
 $admin_user_type = 1;
 $buyer_user_type = 2;
+
+$ORDER_PENDING = 0;
+$ORDER_APPROVED = 1;
+$ORDER_REJECTED = 2;
+$ORDER_PROCESSING = 3;
+$ORDER_SHIPPED = 4;
+$ORDER_DELIVERED = 5;
+$ORDER_CANCELED = 6;
+
 return [
     
     'PERMISSION_ERROR'=>"P401",
@@ -19,13 +28,13 @@ return [
     'VALIDATION_ERROR'=>1000,
     'UNATHENTICATED_ERROR'=>4001,
 
-    'ORDER_PENDING'=> 0,
-    'ORDER_APPROVED'=> 1,
-    'ORDER_REJECTED'=> 2,
-    'ORDER_PROCESSING'=> 3,
-    'ORDER_SHIPPED'=> 4,
-    'ORDER_DELIVERED'=> 5,
-    'ORDER_CANCELED'=> 6,
+    'ORDER_PENDING'=> $ORDER_PENDING,
+    'ORDER_APPROVED'=> $ORDER_APPROVED,
+    'ORDER_REJECTED'=> $ORDER_REJECTED,
+    'ORDER_PROCESSING'=> $ORDER_PROCESSING,
+    'ORDER_SHIPPED'=> $ORDER_SHIPPED,
+    'ORDER_DELIVERED'=> $ORDER_DELIVERED,
+    'ORDER_CANCELED'=> $ORDER_CANCELED,
 
     'PRODUCT_ADD_SUCCESS'=>100,
     'PRODUCT_ADD_FAILED'=>-100,
@@ -90,10 +99,18 @@ return [
 
 ],
 
-    "BUYER_PERMISSION_ROUTE"=>[
-        'order.index',
-        'order.add',
-        'order.edit',
-        'order.delete',
+    "ORDER_STATUS_LIST"=>[
+        "$admin_user_type" =>[
+            $ORDER_PENDING =>"PENDING",
+            $ORDER_APPROVED => "APPROVED",
+            $ORDER_REJECTED =>"REJECTED",
+            $ORDER_PROCESSING =>"PROCESSING",
+            $ORDER_SHIPPED =>"SHIPPED",
+            $ORDER_DELIVERED =>"DELIVERED"
+        ],
+        "$buyer_user_type"=>[
+            $ORDER_PENDING =>"PENDING",
+            $ORDER_CANCELED =>"CANCEL"
+        ]
     ],
 ];

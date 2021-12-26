@@ -25,6 +25,7 @@ class AuthController extends Controller
             $data['access_token'] = $token;
             $data['user'] = Auth::user();
             $data['permission'] = config('constant.PERMISSIONS.'.$data['user']->user_type);
+            $data['order_status_list'] = config('constant.ORDER_STATUS_LIST.'.$data['user']->user_type);
             $data['default_route'] = current($data['permission']);
 
         } catch (\Exception $e) {
@@ -69,6 +70,7 @@ class AuthController extends Controller
         $data['user'] = auth()->user();
         $data['access_token'] = request()->bearerToken();
         $data['permission'] = config('constant.PERMISSIONS.'.$data['user']->user_type);
+        $data['order_status_list'] = config('constant.ORDER_STATUS_LIST.'.$data['user']->user_type);
         $data['default_route'] = current($data['permission']);
         return $this->sendResponse($data,$message,config('constant.AUTH_USER_SUCCESS'));
     }

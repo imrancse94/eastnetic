@@ -1,13 +1,14 @@
 export default {
-    loader: false,
-    status: {
-        loggedIn: false
+    loader:false,
+    status:{
+        loggedIn:false
     },
-    user: {
+    user:{
         user_type:0,
         email:'',
         name:'',
     },
-    permissions: {},
+    permissions:{},
+    order_status_list:{},
     default_route:'Login'
 }

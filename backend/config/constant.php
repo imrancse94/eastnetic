@@ -8,6 +8,8 @@ return [
     
     'PERMISSION_ERROR'=>"P401",
 
+    "SUCCESS_CODE"=>100,
+
     'ADMIN_USER_TYPE'=>$admin_user_type,
     'BUYER_USER_TYPE'=>$buyer_user_type,
 

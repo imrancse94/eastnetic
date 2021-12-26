@@ -27,31 +27,38 @@ class ProductService extends Service{
     // product edit by id
     public function productEdit($id,$inputData){
         $data = null;
-
+        $this->status_message = __("Product edited successfully.");
         try{
             $product = Product::where('id',$id)->first();
-            if(!empty($inputData['image'])){
+            if(isset($inputData['image']) && !empty($inputData['image'])){
                 $inputData['image'] = $this->uploadFile("product",$inputData['image'],$product->image);
             }
             if($product->update($inputData)){
-                $inputData['image'] = $this->getImageByFilePath($inputData['image']);
-                $data = $inputData;
+                if(!empty($inputData['image'])){
+                    $inputData['image'] = $this->getImageByFilePath($inputData['image']);
+                }
+                $this->response_data = $inputData;
             }
             
         }catch(\Exception $ex){
-           // dd($ex->getMessage());
+            $this->status_message = __("Product edited failed.");
+            $this->status_code = config('constant.PRODUCT_EDIT_FAILED');
         }
 
-        return $data;
+        return $this->response_data;
     }
 
     // product delete by id
     public function productDeleteById($id){
         $data = false;
+        $this->status_message = __("Product deleted successfully.");
         try{
             $data = Product::where('id',$id)->delete();
         }catch(\Exception $ex){
-            //dd($ex->getMessage());
+            $this->status_code = config('constant.PRODUCT_DELETED_FAILED');
+            if($ex->getCode() == 23000){
+                $this->status_message = "The product is already in another use";
+            }
         }
 
         return $data;
@@ -63,7 +70,14 @@ class ProductService extends Service{
         if(!empty($product->image)){
             $product->image = $this->getImageByFilePath($product->image);
         }
-        return $product;
+
+        if(!empty($product)){
+            $this->response_data = $product;
+            $this->status_message = __("Product get successfully.");
+        }else{
+            $this->status_code = config('constant.PRODUCT_GET_BY_ID_FAILED');
+        }
+        return $this->response_data;
     }
 
     // get all active products
@@ -90,6 +104,8 @@ class ProductService extends Service{
                 $p->image = $this->getImageByFilePath($p->image);
             }
         }
-        return $products;
+        $this->response_data = $products;
+        $this->status_message = __("Product list get successfully.");
+        return $this->response_data;
     }
 }

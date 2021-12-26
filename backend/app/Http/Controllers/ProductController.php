@@ -36,60 +36,44 @@ class ProductController extends Controller
 
     // edit product
     public function editProduct(ProductRequest $request,$id){
-        $inputData = $request->all();
-        $inputData = array_filter($inputData);
-        $message = __("Product edited failed.");
-        $code = config('constant.PRODUCT_EDIT_FAILED');
-        $data = [];
-        if($data = $this->productService->productEdit($id,$inputData)){
-            $message = __("Product edited successfully.");
-            $code = config('constant.PRODUCT_EDIT_SUCCESS');
-        }
-
-        return $this->sendResponse($data,$message,$code);
+        $inputData = array_filter($request->all());
+        $this->productService->productEdit($id,$inputData);
+        return $this->sendResponse(
+            $this->productService->response_data,
+            $this->productService->status_message,
+            $this->productService->status_code
+        );
     }
 
     // get product by id
     public function getProductById($id){
-        $message = __("Product get failed.");
-        $code = config('constant.PRODUCT_GET_BY_ID_FAILED');
-        $data = [];
-        if($data = $this->productService->getProductById($id)){
-            $message = __("Product get successfully.");
-            $code = config('constant.PRODUCT_GET_BY_ID_SUCCESS');
-        }
-
-        return $this->sendResponse($data,$message,$code);
+        $this->productService->getProductById($id);
+        return $this->sendResponse(
+            $this->productService->response_data,
+            $this->productService->status_message,
+            $this->productService->status_code
+        );
     }
 
     // get all active product list
     public function getProductList(){
         $params = request()->all();
         
-        $data = $this->productService->getAllActiveProducts($params);
-        $message = __("Product list get failed.");
-        $code = config('constant.PRODUCT_GET_LIST_FAILED');
-        if(!empty($data)){
-            $message = __("Product list get successfully.");
-            $code = config('constant.PRODUCT_GET_LIST_SUCCESS');
-        }
-
-        return $this->sendResponse($data,$message,$code);
+        $this->productService->getAllActiveProducts($params);
+        
+        return $this->sendResponse(
+            $this->productService->response_data,
+            $this->productService->status_message,
+            $this->productService->status_code
+        );
     }
 
 
     // delete product by id
     public function deleteProductById($product_id){
-        
-        $message = __("Product deleted failed.");
-        $code = config('constant.PRODUCT_DELETED_FAILED');
-        
-        if($this->productService->productDeleteById($product_id)){
-            $message = __("Product deleted successfully.");
-            $code = config('constant.PRODUCT_DELETED_SUCCESS');
-        }
 
-        return $this->sendResponse([],$message,$code);
+        $this->productService->productDeleteById($product_id);
+        return $this->sendResponse([],$this->productService->status_message,$this->productService->status_code);
     }
 
 

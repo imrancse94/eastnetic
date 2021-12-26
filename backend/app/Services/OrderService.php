@@ -11,6 +11,7 @@ class OrderService extends Service{
     
     use DatabaseTransactions;
 
+
     public static function order_status_array(){ 
         return [
             config('constant.ORDER_PENDING') => "PENDING",

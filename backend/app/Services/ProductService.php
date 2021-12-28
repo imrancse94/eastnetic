@@ -73,7 +73,7 @@ class ProductService extends Service{
                 $this->status_message = __("Product deleted successfully.");
             }
         }catch(\Exception $ex){
-            dd($ex->getMessage());
+            //dd($ex->getMessage());
             $this->status_code = config('constant.PRODUCT_DELETED_FAILED');
             if($ex->getCode() == 23000){
                 $this->status_message = "The product is already in another use";

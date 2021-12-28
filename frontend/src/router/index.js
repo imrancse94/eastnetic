@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
                 next({ name: '404' })
             }
         }
-    } else if (to.matched.some(record => record.meta.isLoginRoute)) {
+    } else  {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
         if (isLoggedIn()) {
@@ -66,9 +66,7 @@ router.beforeEach((to, from, next) => {
         } else {
             next()
         }
-    } else {
-        next() // make sure to always call next()!
-    }
+    } 
 
 
 })

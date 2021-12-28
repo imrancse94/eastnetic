@@ -7,6 +7,14 @@ export default {
             password: user.password
         });
     },
+    
+    signup(user) {
+        return Api.post('user/signup', {
+            name:user.name,
+            email: user.email,
+            password: user.password
+        });
+    },
 
     async getAuthData() {
         return await Api.get('auth/user');

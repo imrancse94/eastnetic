@@ -424,7 +424,6 @@ export default {
     },
 
     deleteProduct(id) {
-      console.log(id);
       this.$swal({
         title: "Are you sure?",
         text: "You won't be able to revert this!",

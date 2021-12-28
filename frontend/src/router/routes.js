@@ -110,6 +110,15 @@ const routes = [{
     },
 },
 {
+    path: '/signup',
+    name: 'Signup',
+    component: () =>
+        import ('./../components/Signup.vue'),
+    meta: {
+        requiresAuth: false
+    },
+},
+{
     path: '*',
     name: '404',
     component: () =>

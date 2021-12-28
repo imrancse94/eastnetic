@@ -22,6 +22,17 @@ export const login = ({ commit }, user) => {
     })
 }
 
+export const signup = ({ commit }, user) => {
+    return auth.signup(user).then(({ data }) => {
+        const response = data.data;
+        // if (response.access_token) {
+        //     setToken(response.access_token)
+        //     commit('SET_LOGIN', response);
+        // }
+        return Promise.resolve(data);
+    })
+}
+
 export const authUser = ({ commit }) => {
     return auth.getAuthData().then(({ data }) => {
         const response = data.data;

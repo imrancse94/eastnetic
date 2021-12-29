@@ -6,17 +6,30 @@
     >
       <div class="w-full md:w-full xl:w-full p-6">
         <div class="flex flex-wrap">
-          <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 pt-2 text-gray-600 mb-5 sm:text-left md:text-left lg:text-left text-center">
-          <router-link :to="{name:'product.add'}" class="w-full block sm:w-1/4 md:w-1/4 lg:w-1/4 xl:w-1/4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
+          <div class="w-full sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 pt-2 text-gray-600 mb-5 sm:text-left md:text-left lg:text-left text-center">
+          <router-link :to="{name:'product.add'}" class="w-full block sm:w-1/2 md:w-full lg:w-1/2 xl:w-1/2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">
           Add Product
         </router-link>
         </div>
-          <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 pt-2 relative text-gray-600 mb-5 sm:text-right md:text-right lg:text-right text-center">
+        <div class="md:p-2 w-full sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 pt-2 text-gray-600 mb-5 sm:text-left md:text-left lg:text-left text-center">
+                <div class="relative">
+                  <select @change="priceSort" v-model="price_sort" class="block appearance-none w-full bg-white bg-clip-padding border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                    <option value="">Sort</option>
+                    <option value="asc">Lowest Price</option>
+                    <option value="desc">Highest Price</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  </div>
+                </div>
+        </div>
+          <div class="w-full sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3 pt-2 relative text-gray-600 mb-5 sm:text-right md:text-right lg:text-right text-center">
             <input
+            v-model="search.name"
             autocomplete="off"
             class="
               w-full
-              sm:w-1/3 md:w-1/3 lg:w-1/3 xl:w-1/3
+              sm:w-1/2 md:w-full lg:w-1/2 xl:w-1/2
               border-2 border-gray-300
               bg-white
               h-10
@@ -30,7 +43,7 @@
             name="search"
             placeholder="Search"
           />
-          <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
+          <button @click.prevent="searchByname" type="submit" class="absolute right-0 top-0 mt-5 mr-4">
             <svg
               class="text-gray-600 h-4 w-4 fill-current"
               xmlns="http://www.w3.org/2000/svg"
@@ -404,6 +417,10 @@ export default {
   data() {
     return {
       productData: [],
+      search:{
+        name:''
+      },
+      price_sort:''
     };
   },
   computed: {},
@@ -422,7 +439,32 @@ export default {
         this.productData = data;
       });
     },
+    searchByname(){
+      var queryparams = Object.assign({}, this.$router.currentRoute.query, {
+        name: this.search.name,
+      });
 
+      this.$router
+        .replace({
+          path: this.$router.currentRoute.path,
+          query: queryparams,
+        })
+        .catch(() => {});
+        this.getPaginateproducts();
+    },
+    priceSort(){
+      var queryparams = Object.assign({}, this.$router.currentRoute.query, {
+        price_sort: this.price_sort,
+      });
+
+      this.$router
+        .replace({
+          path: this.$router.currentRoute.path,
+          query: queryparams,
+        })
+        .catch(() => {});
+        this.getPaginateproducts();
+    },
     deleteProduct(id) {
       this.$swal({
         title: "Are you sure?",

@@ -86,7 +86,7 @@ return [
                 'product.edit',
                 'product.delete',
                 'order.index',
-                'order.add',
+                // 'order.add',
                 'order.edit',
                 'order.delete',
             ],

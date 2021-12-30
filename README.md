@@ -22,7 +22,7 @@ password:123456
 For api testing. A postman collection has added on "backend/postman_collection.json"
 and set collection variable domain value.
 
-- # Login Api
+- ## Login Api
 
 curl --location --request POST 'domain//login' \
 --header 'Accept: application/json' \
@@ -33,7 +33,7 @@ curl --location --request POST 'domain//login' \
     "password":"123456"
 }'
 
-- # Signup Api
+- ## Signup Api
 
 curl --location --request POST 'domain//user/signup' \
 --header 'Accept: application/json' \
@@ -45,28 +45,28 @@ curl --location --request POST 'domain//user/signup' \
     "password":"123456"
 }'
 
-- # Get Auth user
+- ## Get Auth user
 
 curl --location --request GET domain//auth/user' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer token'
 
-- # Logout
+- ## Logout
 
 curl --location --request POST 'domain//user/logout' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer token'
 
-- # Order By Id
+- ## Order By Id
 
 curl --location --request GET 'domain/order/1' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer token'
 
-- # Order List
+- ## Order List
 
 curl --location --request GET 'domain/order/list' \
 --header 'Accept: application/json' \
@@ -84,7 +84,7 @@ curl --location --request POST 'domain/order/add' \
     "qty":5
 }'
 
-- # Order Edit By Id
+- ## Order Edit By Id
 
 curl --location --request PUT 'domain/order/edit/8' \
 --header 'Accept: application/json' \
@@ -95,7 +95,7 @@ curl --location --request PUT 'domain/order/edit/8' \
     "qty":8
 }'
 
-- # Order delete By Id
+- ## Order delete By Id
 
 curl --location --request DELETE 'domain/order/delete/1' \
 --header 'Accept: application/json' \
@@ -103,7 +103,7 @@ curl --location --request DELETE 'domain/order/delete/1' \
 --header 'Authorization: Bearer token' \
 --data-raw ''
 
-- # Product add (only for admin)
+- ## Product add (only for admin)
 
 curl --location --request POST 'domain/product/add' \
 --header 'Accept: application/json' \
@@ -117,7 +117,7 @@ curl --location --request POST 'domain/product/add' \
     "image":"<base64_image_string>"
 }'
 
-- # Product get by Id (only for admin)
+- ## Product get by Id (only for admin)
 
 curl --location --request GET 'domain/product/2' \
 --header 'Accept: application/json' \
@@ -125,7 +125,7 @@ curl --location --request GET 'domain/product/2' \
 --header 'Authorization: Bearer token'
 
 
-- # Product Edit by Id (Only for admin)
+- ## Product Edit by Id (Only for admin)
 
 curl --location --request PUT 'domain/product/edit/1' \
 --header 'Accept: application/json' \
@@ -139,14 +139,14 @@ curl --location --request PUT 'domain/product/edit/1' \
     "image":"<base64_image_string>"
 }'
 
-- # Product delete by id (Only for admin)
+- ## Product delete by id (Only for admin)
 
 curl --location --request DELETE 'domain/product/delete/1' \
 --header 'Accept: application/json' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer token'
 
-- # Product List (Only for admin)
+- ## Product List (Only for admin)
 
 curl --location --request GET 'domain/product/list' \
 --header 'Accept: application/json' \

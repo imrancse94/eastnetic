@@ -8,6 +8,7 @@
 4. php artisan migrate
 5. php artisan db:seed
 6. php artisan config:cache
+7. php artisan queue:work (For email sending)
 
 ## For Frontend
 1. cd frontend && npm install

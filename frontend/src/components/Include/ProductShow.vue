@@ -11,9 +11,9 @@
   >
     <a href="#">
       <img
-        class="object-contain rounded-t-lg"
+        class="object-contain rounded-t-lg w-full"
         :src="product.image ? product.image:$global_contsant.NO_IMAGE_PATH"
-        alt=""
+        alt="No Image"
       />
     </a>
     <div class="p-5">
@@ -25,9 +25,7 @@
             font-bold
             tracking-tight
             text-gray-900
-            dark:text-white
-          "
-        >
+            dark:text-white">
           {{product.name}}
         </h5>
       </a>

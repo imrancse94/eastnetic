@@ -16,7 +16,6 @@
 import { mapActions } from "vuex";
 
 export default {
-  components: { Modal },
   name: "OrderAdd",
   data() {
     return {
@@ -34,7 +33,6 @@ export default {
     getPaginateProduct(){
        this.getProducts(this.$router.currentRoute.query).then(data =>{
          this.product = data;
-        console.log('getProducts',data)
       })
     }
   },

@@ -134,6 +134,23 @@ class OrderService extends Service{
         }
 
         $data['order'] = Order::with('product')->where($clause)->first();
+        if($data['order']->order_status == config('constant.ORDER_APPROVED')){
+            $data['order']['order_list'] = [
+                $data['order']->order_status => self::order_status_array()[$data['order']->order_status]
+            ];
+        }
+
+        if($data['order']->order_status == config('constant.ORDER_REJECTED')){
+            $data['order']['order_list'] = [
+                $data['order']->order_status => self::order_status_array()[$data['order']->order_status]
+            ];
+        }
+        
+        if($data['order']->order_status == config('constant.ORDER_CANCELED')){
+            $data['order']['order_list'] = [
+                $data['order']->order_status => self::order_status_array()[$data['order']->order_status]
+            ];
+        }
         //$data['order']->order_status = self::order_status_array()[$data['order']->order_status];
         $order_history = OrderHistory::where(['order_id'=>$data['order']->id])->get();
         $order_history_data = [];

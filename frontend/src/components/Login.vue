@@ -6,14 +6,14 @@
       <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="Email">
         Email
       </label>
-      <input :class="errors.email ? 'border-red-500':''" v-model="email" type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username"  placeholder="Email">
+      <input autocomplete="off" :class="errors.email ? 'border-red-500':''" v-model="email" type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username"  placeholder="Email">
       <p v-if="errors.email" class="text-red-500 text-xs italic text-left">{{errors.email[0]}}</p>
     </div>
     <div class="mb-6">
       <label class="block text-gray-700 text-sm font-bold mb-2 text-left" for="password">
         Password
       </label>
-      <input :class="errors.password ? 'border-red-500':''" v-model="password" type="password" class="shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" placeholder="Password">
+      <input autocomplete="off" :class="errors.password ? 'border-red-500':''" v-model="password" type="password" class="shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" placeholder="Password">
       <p v-if="errors.password" class="text-red-500 text-xs italic text-left">{{errors.password[0]}}</p>
     </div>
     <div class="flex items-center justify-center">
@@ -34,8 +34,8 @@
 export default {
   data() {
     return {
-      email: "imrancse94@gmail.com",
-      password: "123456",
+      email: "",
+      password: "",
       errors:{}
     };
   },

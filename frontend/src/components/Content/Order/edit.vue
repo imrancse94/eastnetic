@@ -513,14 +513,11 @@
         </div>
         <div class="w-full p-2">
           <div class="flex flex-wrap -mx-3 mb-2 justify-center">
-            <!-- <div v-if="!$global_contsant.ignore_edit_list.some(v=>order.order_status)" class="w-full md:w-1/6 px-3 mb-6 md:mb-0">
-              <button type="button" class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Order Cancel</button>
-            </div> -->
             <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0">
               <router-link :to="{name:'order.index'}" class="w-full bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center block"> Back</router-link>
             </div>
             <div class="w-full md:w-1/6 px-3 mb-6 md:mb-0">
-              <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">Save</button>
+              <button v-if="!this.current_order_list" type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">Save</button>
             </div>
           </div>
         </div>
@@ -552,15 +549,12 @@ export default {
       order_status_list:{},
       orderHistoryData:{},
       errors: {qty:""},
-      request:{}
+      request:{},
+      current_order_list:null,
+      is_qty_disable:false
     };
   },
-  watch:{
-    
-  },
-
   computed:{
-    
     getTotalPrice:function(){
       this.errors.qty = "";
       if(!this.order.qty){
@@ -570,15 +564,19 @@ export default {
       if(this.order.qty > this.product.qty){
         this.errors.qty =  "Out of Stock";
       }
+      
+      if(this.current_order_list){
+         this.errors.qty = "";
+         this.status_disabled = true;
+      }
       this.total_price = this.order.qty * this.order.unit_price;
       return this.total_price;
     },
     
   },
   mounted(){
-    this.getOrderEditData();
     this.order_status_list = this.$store.getters['auth/getOrderStatusList'];
-    //console.log('ddddd',this.order_status_list)
+    this.getOrderEditData();
   },
   
   methods: {
@@ -596,8 +594,13 @@ export default {
           this.order.order_status = data.order.order_status
           this.on_load_order_status = data.order.order_status
           this.db_qty = data.order.qty
-          this.total_price = data.order.qty*data.order.unit_price
+          this.total_price = data.order.qty * data.order.unit_price
           this.product = data.order.product;
+          if(data.order.order_list){
+            this.order_status_list = data.order.order_list;
+            this.current_order_list = this.order_status_list
+          }
+          
           if(data.order_history){
             this.orderHistoryData = data.order_history;
           }

@@ -73,7 +73,7 @@ and set collection variable domain value.
   --header 'Content-Type: application/json' \
   --header 'Authorization: Bearer token'
 
-- # New order add
+- ### New order add
 
   curl --location --request POST 'domain/order/add' \
   --header 'Accept: application/json' \

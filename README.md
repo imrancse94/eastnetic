@@ -1,5 +1,12 @@
 # Demo
 ![alt text](https://github.com/imrancse94/webdevs/blob/main/screenshot.gif?raw=true)
+
+# Techologies:
+- Laravel
+- Vue Js
+- Tailwind css
+- JWT
+
 # Project Setup
 - clone the project https://github.com/imrancse94/webdevs.git
 

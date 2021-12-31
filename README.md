@@ -1,3 +1,5 @@
+### Demo
+![alt text](https://github.com/imrancse94/webdevs/blob/main/screenshot.gif?raw=true)
 # Project Setup
 - clone the project https://github.com/imrancse94/webdevs.git
 

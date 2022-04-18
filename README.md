@@ -1,4 +1,4 @@
-# Techologies:
+# Technologies:
 - Laravel
 - Vue Js
 - BootStrap

@@ -58,6 +58,6 @@ class BaseRequest extends FormRequest
                 $errorData[$key] = current($err);
             }
         }
-        throw new HttpResponseException($this->sendError("validation error", $errorData, config('constant.VALIDATION_ERROR')));
+        throw new HttpResponseException($this->sendError("validation error", $errorData, config('status_code.VALIDATION_ERROR')));
     }
 }

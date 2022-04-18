@@ -7,6 +7,8 @@ use App\Models\Link;
 
 class UrlShortenerController extends Controller
 {
+
+
     public function storeUrl(UrlRequest $request)
     {
         $response = [];
@@ -16,15 +18,15 @@ class UrlShortenerController extends Controller
             $data['hash'] = $this->unique_strings(6);
             $insertedData = $link->insertUrl($data);
             $message = 'URL has not been shortened successfully';
-            $status_code = 101;
+            $status_code = config('status_code.FAILED_CODE');
             if (!empty($insertedData)) {
                 $response['shortener_url'] = url('/') . '/' . $data['hash'];
-                $message = 'Url created successfully.';
-                $status_code = 100;
+                $message = __('Url created successfully.');
+                $status_code = config('status_code.SUCCESS_CODE');
             }
         } catch (\Exception $e) {
             $message = 'Something went wrong.';
-            $status_code = 102;
+            $status_code = config('status_code.UNKNOWN_ERROR');
         }
         return $this->sendResponse($response, $message,$status_code);
     }

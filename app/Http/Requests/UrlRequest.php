@@ -29,7 +29,7 @@ class UrlRequest extends BaseRequest
     public function messages()
     {
         return [
-            'url.unique' => 'URL is already in use',
+            'url.unique' => 'URL is already created previously.',
         ];
     }
 }

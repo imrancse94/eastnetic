@@ -12,12 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('{hash}',[\App\Http\Controllers\UrlShortenerController::class,'getUrl'])->name('getUrl');
-/* Route::get('/testing', function () {
-     $url = "http://testsafebrowsing.appspot.com/apiv4/ANY_PLATFORM/MALWARE/URL/";
-        \App\Lib\UrlChecker::isValidURL($url);
- })*/;
-Route::get('{path}', function () {
+Route::get('/', function () {
     return view('app');
 })->where('path', '(.*)');
+
+Route::get('{hash}',[\App\Http\Controllers\UrlShortenerController::class,'getUrl'])->name('getUrl');
+
+

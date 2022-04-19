@@ -25,7 +25,7 @@ class UrlShortenerController extends Controller
                 $status_code = config('status_code.SUCCESS_CODE');
             }
         } catch (\Exception $e) {
-            $message = 'Something went wrong.';
+            $message = __('Something went wrong.');
             $status_code = config('status_code.UNKNOWN_ERROR');
         }
         return $this->sendResponse($response, $message,$status_code);

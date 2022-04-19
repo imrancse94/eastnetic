@@ -11,7 +11,7 @@
 2. copy .env.example to .env (cp .env.example .env)
 3. setup .env with database config
 4. php artisan config:cache
-5. php artisan migrate or you can export mysql from project root (eastnetic.sql)
+5. php artisan migrate or you can import mysql from project root (eastnetic.sql)
 
 ## For Frontend
 1. set api base url in resources/js/Api/config.js (e.g, http://localhost:8000/api/)

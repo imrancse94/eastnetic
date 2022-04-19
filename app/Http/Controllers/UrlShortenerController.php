@@ -43,6 +43,6 @@ class UrlShortenerController extends Controller
             return redirect($data->url);
         }
 
-        abort(404,'URL not found',);
+        abort(404,'URL not found');
     }
 }

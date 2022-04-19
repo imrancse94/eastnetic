@@ -17,7 +17,7 @@ class UrlShortenerController extends Controller
             $link = new Link();
             $data['hash'] = $this->unique_strings(6);
             $insertedData = $link->insertUrl($data);
-            $message = 'URL has not been shortened successfully';
+            $message = __('URL has not been shortened successfully');
             $status_code = config('status_code.FAILED_CODE');
             if (!empty($insertedData)) {
                 $response['shortener_url'] = url('/') . '/' . $data['hash'];

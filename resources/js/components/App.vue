@@ -60,6 +60,7 @@ export default {
         shortenUrl(e) {
             this.loading = true;
             this.errors = {};
+            this.shortUrl = "";
             Api.post('store-url', {
                 url: this.url
             }).then(response => {

@@ -20,7 +20,7 @@ class UrlShortenerController extends Controller
             $message = __('URL has not been shortened successfully');
             $status_code = config('status_code.FAILED_CODE');
             if (!empty($insertedData)) {
-                $response['shortener_url'] = url('/') . '/' . $data['hash'];
+                $response['shortener_url'] = url('/',$data['hash']) ;
                 $message = __('Url created successfully.');
                 $status_code = config('status_code.SUCCESS_CODE');
             }

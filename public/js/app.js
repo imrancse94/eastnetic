@@ -5329,6 +5329,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loading = true;
       this.errors = {};
+      this.shortUrl = "";
       _Api__WEBPACK_IMPORTED_MODULE_0__.Api.post('store-url', {
         url: this.url
       }).then(function (response) {

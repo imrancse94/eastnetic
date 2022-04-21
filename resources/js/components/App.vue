@@ -16,18 +16,18 @@
                                     </div>
                                     <hr>
                                     <form @submit.prevent="shortenUrl" autocomplete="off" class="form" role="form">
-                                        <div class="form-group">
+                                        <div class="form-group pb-3">
                                             <label for="url">URL</label>
                                             <input v-model="url" class="form-control"
                                                    :class="errors.url ? 'is-invalid':''" id="url" type="text">
-                                            <div v-if="errors.url" class="invalid-feedback">{{ errors.url }}</div>
+                                            <div class="invalid-feedback position-absolute">{{ errors.url }}</div>
                                         </div>
                                         <hr>
                                         <div class="form-group row">
                                             <div class="col-md-4 offset-4">
                                                 <button class="btn btn-primary btn-lg btn-block" :disabled="loading" type="submit">
                                                     <span v-if="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                    {{loading ? 'Loading...':'Submit'}}
+                                                    {{loading ? 'Loading......':'Generate URL'}}
                                                 </button>
                                             </div>
                                         </div>

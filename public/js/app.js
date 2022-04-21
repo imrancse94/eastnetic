@@ -28082,7 +28082,7 @@ var render = function () {
                       },
                     },
                     [
-                      _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "form-group pb-3" }, [
                         _c("label", { attrs: { for: "url" } }, [_vm._v("URL")]),
                         _vm._v(" "),
                         _c("input", {
@@ -28108,11 +28108,11 @@ var render = function () {
                           },
                         }),
                         _vm._v(" "),
-                        _vm.errors.url
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.url)),
-                            ])
-                          : _vm._e(),
+                        _c(
+                          "div",
+                          { staticClass: "invalid-feedback position-absolute" },
+                          [_vm._v(_vm._s(_vm.errors.url))]
+                        ),
                       ]),
                       _vm._v(" "),
                       _c("hr"),
@@ -28139,7 +28139,9 @@ var render = function () {
                               _vm._v(
                                 "\n                                                " +
                                   _vm._s(
-                                    _vm.loading ? "Loading..." : "Submit"
+                                    _vm.loading
+                                      ? "Loading......"
+                                      : "Generate URL"
                                   ) +
                                   "\n                                            "
                               ),

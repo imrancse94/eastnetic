@@ -14,11 +14,10 @@
 5. php artisan migrate or you can import mysql from project root (eastnetic.sql)
 
 ## For Frontend
-1. set api base url in resources/js/Api/config.js (e.g, <base_url>/public/api/)
-2. npm install
-3. npm run dev
+1. npm install
+2. npm run dev
 
 ## Run Project
 After all configuartion done above.
 
-go to the link <base_url>/public
+go to the link <base_url>

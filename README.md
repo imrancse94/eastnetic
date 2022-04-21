@@ -21,6 +21,4 @@
 ## Run Project
 After all configuartion done above.
 
-run : php artisan serve
-
-go to the link http://localhost:8000/
+go to the link <project-base-url>/public

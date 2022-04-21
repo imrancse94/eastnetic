@@ -14,6 +14,9 @@
 <div id="app">
     <App></App>
 </div>
+<script>
+    const base_url = '{{get_base_url()}}'
+</script>
 <script src="{{ asset('/js/app.js') }}"></script>
 </body>
 </html>

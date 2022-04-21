@@ -22,3 +22,10 @@ if (!function_exists('getBase64ImageSize')) {
         }
     }
 }
+
+
+if (!function_exists('get_base_url')) {
+    function get_base_url(){
+        return str_replace('public','',url('/'));
+    }
+}

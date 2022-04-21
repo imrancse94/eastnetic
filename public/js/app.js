@@ -5402,7 +5402,6 @@ Api.interceptors.request.use(function (config) {
   req.pending();
   config.headers['Content-Type'] = 'application/json';
   config.headers['Accept'] = 'application/json';
-  console.log('resquest.success', config);
   return config;
 }, function (error) {
   req.done();
@@ -5410,7 +5409,6 @@ Api.interceptors.request.use(function (config) {
 });
 Api.interceptors.response.use(function (response) {
   req.done();
-  console.log('response.success', response);
   return response;
 }, function (error) {
   req.done();

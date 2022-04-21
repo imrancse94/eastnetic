@@ -11,7 +11,9 @@
     <title>URL Shortener</title>
 </head>
 <body>
-<div id="app"></div>
-<script src="{{ mix('/js/app.js') }}"></script>
+<div id="app">
+    <App></App>
+</div>
+<script src="{{ asset('/js/app.js') }}"></script>
 </body>
 </html>

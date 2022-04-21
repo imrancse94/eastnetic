@@ -21,4 +21,4 @@
 ## Run Project
 After all configuartion done above.
 
-go to the link <project-base-url>/public
+go to the link <base_url>/public

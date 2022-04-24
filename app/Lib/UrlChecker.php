@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Lib;
+use Illuminate\Support\Facades\Http;
 
 class UrlChecker
 {
@@ -8,15 +9,11 @@ class UrlChecker
 
     public static function postRequest($url,$data)
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $server_output = curl_exec($ch);
-        curl_close($ch);
-        return $server_output;
+       $response = Http::withHeaders([
+            'Content-Type' => 'application/json'
+        ])->post($url,$data);
+
+        return json_decode((string) $response->getBody(), true);
     }
 
 
@@ -40,9 +37,7 @@ class UrlChecker
             )
         );
 
-        $data = json_encode($data);
         $response = self::postRequest($base_url,$data);
-        $response = json_decode($response,true);
         if(!empty($response) && isset($response['matches'])){
             $result = false;
         }
